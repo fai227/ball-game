@@ -1,0 +1,29 @@
+<canvas id="canvas" style="border:5px solid black">
+
+</canvas>
+<script src="./src/matter.js"></script>
+<script>
+    const engine = Matter.Engine.create();
+    const canvas = document.getElementById("canvas");
+    const render = Matter.Render.create({
+        canvas: canvas,
+        engine: engine,
+        option: {
+            width: 300,
+            height: 300,
+            wireframes: false
+        }
+    });
+    const runner = Matter.Runner.create();
+
+    Matter.Render.run(render);
+    Matter.Runner.run(runner, engine);
+
+    const ball = Matter.Bodies.circle(100, 100, 10, {
+        render: {
+            fillStyle: "red",
+        }
+    });
+    Matter.Composite.add(engine.world, [ball]);
+    Matter.Engine.update(engine);
+</script>
