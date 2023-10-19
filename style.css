@@ -9,6 +9,29 @@ body {
     text-align: center;
 }
 
+table {
+    margin: auto;
+    table-layout: fixed;
+    width: 90%;
+
+}
+
+table,
+th,
+td {
+    border-collapse: collapse;
+    border-radius: 2px;
+    border-color: #B2D2E1;
+    border-style: solid;
+
+
+}
+
+th,
+td {
+    width: 80%;
+}
+
 footer {
     background: #c78e54;
 
@@ -36,4 +59,8 @@ footer {
     color: white;
 
     -webkit-text-stroke: 2px #7a5829;
+}
+
+.rankingBallImg {
+    width: 100%;
 }
