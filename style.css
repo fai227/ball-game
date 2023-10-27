@@ -7,6 +7,7 @@
 
 body {
     text-align: center;
+    animation: fadeIn 1s forwards;
 }
 
 table {
@@ -63,4 +64,14 @@ footer {
 
 .rankingBallImg {
     width: 100%;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
