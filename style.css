@@ -13,6 +13,7 @@
 body {
     text-align: center;
     font-family: "TextFont";
+    font-size: x-large;
     animation: fadeIn 1s forwards;
 }
 
@@ -42,7 +43,6 @@ td {
 footer {
     background: #c78e54;
 
-    font-size: large;
 
     display: flex;
     justify-content: space-between;
