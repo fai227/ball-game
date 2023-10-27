@@ -1,12 +1,18 @@
 @charset "utf-8";
 
 @font-face {
-    font-family: "mini-wakuwaku";
+    font-family: "HeaderFont";
     src: url("./font/mini-wakuwaku.otf");
+}
+
+@font-face {
+    font-family: "TextFont";
+    src: url("./font/MPLUSRounded1c-Regular.ttf");
 }
 
 body {
     text-align: center;
+    font-family: "TextFont";
     animation: fadeIn 1s forwards;
 }
 
@@ -56,14 +62,18 @@ footer {
 
 
 .simpleText {
-    font-family: "mini-wakuwaku";
+    font-family: "HeaderFont";
     color: white;
 
     -webkit-text-stroke: 2px #7a5829;
 }
 
+.scoreDiv * {
+    vertical-align: middle;
+}
+
 .rankingBallImg {
-    width: 100%;
+    height: 1rem;
 }
 
 @keyframes fadeIn {

@@ -21,10 +21,11 @@ function setRanking(rankingData) {
     function getRankDivs(rank, data) {
         const td = document.createElement("td");
         const nameDiv = document.createElement("div");
-        nameDiv.innerHTML = `${rank} ${data.name}`;
+        nameDiv.innerHTML = `${rank}位 ${data.name}`;
         td.appendChild(nameDiv);
         const scoreDiv = document.createElement("div");
         scoreDiv.innerHTML = `<img src="./img/${data.ball}.png" class="rankingBallImg"> ${data.score}`;
+        scoreDiv.classList.add("scoreDiv");
         td.appendChild(scoreDiv);
 
         return td;
