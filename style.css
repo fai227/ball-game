@@ -11,9 +11,14 @@
 }
 
 body {
+    background-image: url(./img/background.png);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+
     text-align: center;
     font-family: "TextFont";
-    font-size: x-large;
+    font-size: large;
     animation: fadeIn 1s forwards;
 }
 
@@ -22,6 +27,12 @@ table {
     table-layout: fixed;
     width: 90%;
 
+    background-color: #ECD680;
+    color: #7a560c;
+}
+
+th {
+    font-size: x-large;
 }
 
 table,
@@ -43,6 +54,7 @@ td {
 footer {
     background: #c78e54;
 
+    margin-top: 1rem;
 
     display: flex;
     justify-content: space-between;
