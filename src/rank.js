@@ -24,10 +24,6 @@ function setRanking(rankingData) {
         if (rank != undefined) {
             td.classList.add(`rank${rank}Td`);
 
-            if (rank > 3 && rank % 2 == 1) {
-                td.classList.add("oddRankTd");
-            }
-
             const nameDiv = document.createElement("div");
             nameDiv.innerHTML = `${rank}位 ${data.name}`;
             nameDiv.classList.add("nameDiv");

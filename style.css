@@ -11,15 +11,28 @@
 }
 
 body {
-    background-image: url(./img/background.png);
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
+    background-color: #C68E53;
 
     text-align: center;
     font-family: "TextFont";
     font-size: large;
     animation: fadeIn 1s forwards;
+}
+
+body:before {
+    content: "";
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    background: url(./img/background.png) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 hr {
@@ -29,6 +42,30 @@ hr {
     border: none;
     margin-top: 2rem;
     margin-bottom: 2rem;
+}
+
+button {
+    display: block;
+    margin: 1rem auto;
+
+    background-color: #FEC50C;
+    box-shadow: 0 0.5rem 0 #C07F0E;
+
+    font-family: "HeaderFont";
+    font-size: min(5vw, 2.6vh);
+    color: white;
+    -webkit-text-stroke: 2px #7a5829;
+
+    border: none;
+    border-radius: 1000px;
+
+    width: 60%;
+    height: 8%;
+}
+
+button:active {
+    box-shadow: none;
+    transform: translateY(0.5rem);
 }
 
 table {
@@ -75,13 +112,31 @@ footer {
     background: #c78e54;
 
     margin-top: 1rem;
+    padding: 0.5rem;
 
     display: flex;
     justify-content: space-between;
 }
 
+#gameDiv {
+    position: relative;
+}
+
 #wrappingDiv {
     margin: auto;
+}
+
+#titleDiv {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#titleDiv img {
+    width: 50%;
 }
 
 #repositoryDiv {
@@ -114,10 +169,6 @@ footer {
     color: #693f00;
 }
 
-.oddRankTd {
-    background-color: #ebd368;
-}
-
 .nameDiv {
     font-size: x-large;
 }
@@ -132,7 +183,7 @@ footer {
 
 
 .rankingBallImg {
-    height: 1rem;
+    height: 2rem;
 }
 
 @keyframes fadeIn {
