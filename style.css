@@ -10,6 +10,11 @@
     src: url("./font/MPLUSRounded1c-Regular.ttf");
 }
 
+html {
+    touch-action: manipulation;
+    -ms-touch-action: manipulation;
+}
+
 body {
     background-color: #C68E53;
 
@@ -17,6 +22,12 @@ body {
     font-family: "TextFont";
     font-size: large;
     animation: fadeIn 1s forwards;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
 }
 
 body:before {
@@ -63,10 +74,16 @@ button {
     height: 8%;
 }
 
+button:hover {
+    transform: translateY(0.25rem);
+}
+
 button:active {
     box-shadow: none;
     transform: translateY(0.5rem);
 }
+
+
 
 table {
     margin: auto;
