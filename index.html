@@ -16,9 +16,10 @@
         <div id="gameDiv">
             <canvas style="border: 2px solid black;" id="canvas"></canvas>
             <div id="titleDiv">
-                <button ontouchstart="">ゲームスタート</button>
-                <button ontouchstart="">ランキング</button>
-                <button ontouchstart="">あそびかた</button>
+                <img src="./img/title.png">
+                <button ontouchstart="" class="titleButton">ゲームスタート</button>
+                <button ontouchstart="" class="titleButton">ランキング</button>
+                <button ontouchstart="" class="titleButton">あそびかた</button>
             </div>
         </div>
         <hr>
@@ -34,7 +35,20 @@
             <div id="collaboratorDiv">絵：にわとり</div>
         </footer>
     </div>
-
+    <div id="dialogWrapperDiv">
+        <div id="dialogDiv">
+            <h1>スコア：<span id="scoreSpan">100</span>点</h1>
+            <span id="nameInputSpan">
+                <p>
+                    スコアを更新したよ‼
+                    <br>
+                    ランキングで使う名前を入力してね
+                </p>
+                <input type="text" placeholder="ニックネーム">
+            </span>
+            <button>OK</button>
+        </div>
+    </div>
 </body>
 <script src="./src/rank.js"></script>
 <script src="./src/game.js"></script>

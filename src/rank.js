@@ -21,7 +21,7 @@ function setRanking(rankingData) {
     function getRankDivs(rank, data) {
         const td = document.createElement("td");
 
-        if (rank != undefined) {
+        if (data != undefined) {
             td.classList.add(`rank${rank}Td`);
 
             const nameDiv = document.createElement("div");

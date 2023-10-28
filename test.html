@@ -8,14 +8,14 @@
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" width="288" height="512"></canvas>
 </body>
 <script src="./src/phaser.min.js"></script>
 <script>
     const config = {
         type: Phaser.CANVAS,
-        width: 450,
-        height: 800,
+        width: 1080,
+        height: 1920,
         canvas: document.getElementById("canvas"),
         scene: {
             preload: preload,
@@ -24,6 +24,9 @@
         },
         physics: {
             default: "arcade",
+        },
+        scale: {
+            mode: Phaser.Scale.FIT,
         }
     };
 

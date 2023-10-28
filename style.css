@@ -57,7 +57,6 @@ hr {
 
 button {
     display: block;
-    margin: 1rem auto;
 
     background-color: #FEC50C;
     box-shadow: 0 0.5rem 0 #C07F0E;
@@ -69,21 +68,17 @@ button {
 
     border: none;
     border-radius: 1000px;
-
-    width: 60%;
-    height: 8%;
 }
 
 button:hover {
     transform: translateY(0.25rem);
+    box-shadow: 0 0.25rem 0 #C07F0E;
 }
 
 button:active {
     box-shadow: none;
     transform: translateY(0.5rem);
 }
-
-
 
 table {
     margin: auto;
@@ -153,7 +148,57 @@ footer {
 }
 
 #titleDiv img {
-    width: 50%;
+    height: 30%;
+    margin-top: 20%;
+    margin-bottom: 20%;
+}
+
+#dialogWrapperDiv {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    backdrop-filter: blur(3px);
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#dialogDiv {
+    width: min(80vw, 50vh);
+    margin: auto;
+
+    border-color: #D9A560;
+    border-width: 1rem;
+    border-radius: 5rem;
+    border-style: solid;
+    background: #FFF7D3;
+
+    text-align: center;
+}
+
+#dialogDiv h1 {
+    font-size: xx-large;
+}
+
+#dialogDiv button {
+    margin: 2rem auto;
+    width: min(50vw, 35vh);
+    height: 8vh;
+}
+
+#dialogDiv input {
+    font-size: xx-large;
+    font-family: "TextFont";
+    text-align: center;
+
+    border-color: #D9A560;
+    border-width: 0.5rem;
+    border-style: solid;
+    border-radius: 1000px;
 }
 
 #repositoryDiv {
@@ -169,6 +214,13 @@ footer {
     color: white;
 
     -webkit-text-stroke: 2px #7a5829;
+}
+
+.titleButton {
+    vertical-align: bottom;
+    margin: 5% auto;
+    width: 60%;
+    height: 8%;
 }
 
 .rank1Td {
@@ -197,7 +249,6 @@ footer {
 .scoreDiv * {
     vertical-align: middle;
 }
-
 
 .rankingBallImg {
     height: 2rem;
