@@ -20,13 +20,23 @@ function setRanking(rankingData) {
 
     function getRankDivs(rank, data) {
         const td = document.createElement("td");
-        const nameDiv = document.createElement("div");
-        nameDiv.innerHTML = `${rank}位 ${data.name}`;
-        td.appendChild(nameDiv);
-        const scoreDiv = document.createElement("div");
-        scoreDiv.innerHTML = `<img src="./img/${data.ball}.png" class="rankingBallImg"> ${data.score}`;
-        scoreDiv.classList.add("scoreDiv");
-        td.appendChild(scoreDiv);
+
+        if (rank != undefined) {
+            td.classList.add(`rank${rank}Td`);
+
+            if (rank > 3 && rank % 2 == 1) {
+                td.classList.add("oddRankTd");
+            }
+
+            const nameDiv = document.createElement("div");
+            nameDiv.innerHTML = `${rank}位 ${data.name}`;
+            nameDiv.classList.add("nameDiv");
+            td.appendChild(nameDiv);
+            const scoreDiv = document.createElement("div");
+            scoreDiv.innerHTML = `<img src="./img/${data.ball}.png" class="rankingBallImg"> ${data.score}点`;
+            scoreDiv.classList.add("scoreDiv");
+            td.appendChild(scoreDiv);
+        }
 
         return td;
     }
@@ -89,7 +99,9 @@ async function getRanking() {
     const result = await fetch(rankingURL);
     const data = await result.json();
 
-    lowestScore = data["week"][data["week"].length - 1].score;
+    if (data["week"].length == 10) {
+        lowestScore = data["week"][data["week"].length - 1].score;
+    }
 
     setRanking(data);
 }
