@@ -8,46 +8,36 @@
 </head>
 
 <body>
-    <canvas id="canvas" width="288" height="512"></canvas>
+    <canvas id="test" style="border: 1rem solid black; width: 360px; height: 640px;"></canvas>
 </body>
-<script src="./src/phaser.min.js"></script>
+<script src="./src/matter.js"></script>
 <script>
-    const config = {
-        type: Phaser.CANVAS,
-        width: 1080,
-        height: 1920,
-        canvas: document.getElementById("canvas"),
-        scene: {
-            preload: preload,
-            create: create,
-            update: update
+    const Engine = Matter.Engine;
+    const Render = Matter.Render;
+    const Runner = Matter.Runner;
+    const Bodies = Matter.Bodies;
+    const Body = Matter.Body;
+    const Composite = Matter.Composite;
+    const Events = Matter.Events;
+
+    const engine = Engine.create();
+    const render = Render.create({
+        canvas: document.getElementById("test"),
+        engine: engine,
+        options: {
+            width: 1080,
+            height: 1980,
+            wireframes: false,
+            background: 'transparent',
+            wireframeBackground: 'transparent'
         },
-        physics: {
-            default: "arcade",
-        },
-        scale: {
-            mode: Phaser.Scale.FIT,
-        }
-    };
+    });
+    Render.run(render);
+    const runner = Runner.create();
+    Runner.run(runner, engine);
 
-
-    function preload() {
-        this.load.image("ball", "img/1.png");
-
-    }
-
-    function create() {
-        ball = this.physics.add.sprite(100, 0, "ball");
-        ball.setGravityY(100);
-
-    }
-
-    function update() {
-
-    }
-
-    const game = new Phaser.Game(config);
-
+    const ball = Bodies.circle(100, 100, 30);
+    Composite.add(engine.world, ball);
 </script>
 
 </html>
