@@ -24,7 +24,7 @@ const render = Render.create({
         height: 1980,
         wireframes: false,
         background: 'transparent',
-        wireframeBackground: 'transparent'
+        wireframeBackground: 'black'
     },
 });
 Render.run(render);
@@ -155,6 +155,7 @@ render.canvas.addEventListener("pointermove", (e) => {
     const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
     setPlaceholder(x);
 });
+
 render.canvas.addEventListener("pointerup", (e) => {
     if (placeholder.ball == undefined) return;
 
@@ -219,7 +220,7 @@ function createBall(x, y, ballNum) {
         return ball;
     }
 
-    const ball = Bodies.circle(x, y, BallSize[ballNum - 1] / 2, {
+    const ball = Bodies.fromVertices(x, y, eightVertices, {
         render: {
             sprite: {
                 texture: `./img/balls/${ballNum}.png`,
