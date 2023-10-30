@@ -199,6 +199,10 @@ footer {
     font-size: xx-large;
 }
 
+#dialogDiv h2 {
+    font-size: x-large;
+}
+
 #dialogDiv button {
     margin: 2rem auto;
     width: min(50vw, 35vh);
@@ -209,6 +213,8 @@ footer {
     font-size: xx-large;
     font-family: "TextFont";
     text-align: center;
+
+    width: 90%;
 
     border-color: #D9A560;
     border-width: 0.5rem;
@@ -254,7 +260,7 @@ footer {
 }
 
 .nameDiv {
-    font-size: x-large;
+    font-size: large;
 }
 
 .scoreDiv {

@@ -42,16 +42,17 @@
     </div>
     <div id="dialogWrapperDiv">
         <div id="dialogDiv">
-            <h1>スコア：<span id="scoreSpan">100</span>点</h1>
+            <h1>ゲームオーバー</h1>
+            <h2>スコア：<span id="scoreSpan">0</span>点</h2>
             <span id="nameInputSpan">
                 <p>
                     スコアを更新したよ‼
                     <br>
-                    ランキングで使う名前を入力してね
+                    ランキングで使う名前を10文字までで入力してね。
                 </p>
-                <input type="text" placeholder="ニックネーム">
+                <input type="text" placeholder="ニックネーム" id="usernameInput" maxlength="10">
             </span>
-            <button>OK</button>
+            <button onclick="okPressed()">OK</button>
         </div>
     </div>
 </body>

@@ -49,11 +49,6 @@ function setRanking(rankingData) {
 }
 
 async function postRanking(name, score, ball) {
-    // ランキングに入るかチェック
-    if (lowestScore > score) {
-        return;
-    }
-
     // 成功するまでPOSTし続ける
     while (true) {
         try {
@@ -89,6 +84,9 @@ async function postRanking(name, score, ball) {
             }
         }
     }
+
+    // リロード
+    setTimeout(() => window.location.reload(), 1000);
 }
 
 async function getRanking() {

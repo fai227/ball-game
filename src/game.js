@@ -11,11 +11,13 @@ const Events = Matter.Events;
 const bubbleImage = new Image(); bubbleImage.src = "./img/bubble.png";
 const ballImages = []; for (let i = 1; i <= 11; i++) { const tmpImage = new Image(); tmpImage.src = `./img/balls/${i}.png`; ballImages.push(tmpImage) };
 const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600];
-const gameData = { score: 0, ball: undefined, next: 1 };
+const BallScore = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55];
+const gameData = { score: 0, ball: 1, next: 1 };
 const placeholder = { x: 540, ball: undefined };
 
 // 環境設定
 const engine = Engine.create();
+engine.gravity.scale = 0.003;
 const render = Render.create({
     canvas: document.getElementById("canvas"),
     engine: engine,
@@ -23,6 +25,7 @@ const render = Render.create({
         width: 1080,
         height: 1980,
         wireframes: false,
+        // showDebug: true,
         background: 'transparent',
         wireframeBackground: 'black'
     },
@@ -83,15 +86,15 @@ Events.on(render, "afterRender", () => {
     context.drawImage(bubbleImage, 100, 50, 300, 300);
     context.fillText("スコア", 250, 80);
     context.strokeText("スコア", 250, 80);
-    context.fillText(gameData.score, 250, 230, 250);
-    context.strokeText(gameData.score, 250, 230, 250);
+    context.fillText(gameData.score, 250, 215, 250);
+    context.strokeText(gameData.score, 250, 215, 250);
 
     // ネクスト表示
     context.drawImage(bubbleImage, 680, 50, 300, 300);
     context.fillText("ネクスト", 830, 80);
     context.strokeText("ネクスト", 830, 80);
     const nextBallWidth = BallSize[gameData.next - 1];
-    context.drawImage(ballImages[gameData.next - 1], 830 - nextBallWidth / 2, 200 - nextBallWidth / 2, nextBallWidth, nextBallWidth);
+    context.drawImage(ballImages[gameData.next - 1], 830 - nextBallWidth / 2, 205 - nextBallWidth / 2, nextBallWidth, nextBallWidth);
 
     // プレースホルダーを表示
     if (placeholder.ball != undefined) {
@@ -143,20 +146,38 @@ Events.on(engine, "collisionStart", (e) => {
         const averageY = (pair.bodyA.position.y + pair.bodyB.position.y) / 2;
         const nextBall = pair.bodyA.tag + 1;
 
+        // ボールを削除
         Composite.remove(engine.world, pair.bodyA);
         Composite.remove(engine.world, pair.bodyB);
 
+        // ボールを生成
         createBall(averageX, averageY, nextBall).gone = true;
+
+        // スコア反映
+        gameData.score += BallScore[nextBall - 1];
+        if (gameData.ball < nextBall) {
+            gameData.ball = nextBall;
+        }
     }
 });
 
-// タッチイベント
-render.canvas.addEventListener("pointermove", (e) => {
-    const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
-    setPlaceholder(x);
+Events.on(runner, 'tick', () => {
+    runner.deltaMin = runner.fps > 60 ? 1000 / runner.fps : 1000 / 60;
 });
 
-render.canvas.addEventListener("pointerup", (e) => {
+// タッチイベント
+render.canvas.addEventListener("mousemove", mousemove);
+
+function mousemove(e) {
+    if (placeholder.ball == undefined) return;
+
+    const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
+    setPlaceholder(x);
+}
+
+render.canvas.addEventListener("pointerup", pointerup);
+
+function pointerup(e) {
     if (placeholder.ball == undefined) return;
 
     // 最終移動
@@ -168,7 +189,7 @@ render.canvas.addEventListener("pointerup", (e) => {
 
     // 次に向けて設定
     placeholder.ball = undefined;
-});
+}
 
 function setPlaceholder(x) {
     // 左に行きすぎな場合の修正
@@ -190,15 +211,64 @@ function start() {
 
 // ゲーム終了関数
 function gameOver() {
+    // 操作不能
+    placeholder.ball = undefined;
+    render.canvas.removeEventListener("mousemove", mousemove);
+    render.canvas.removeEventListener("pointerup", pointerup);
+
     // シミュレーションを止める
     Runner.stop(runner);
+
+    // ランキングチェック
+    document.getElementById("scoreSpan").textContent = gameData.score;
+    if (gameData.score <= lowestScore) {  // ランキング用のInputを非表示
+        document.getElementById("nameInputSpan").style.display = "none";
+    }
+    else {  // ランキング用のInputを表示
+        // ユーザーネームのキャッシュがあればそれを反映
+        let username = localStorage.getItem("username");
+        if (username != undefined) {
+            document.getElementById("usernameInput").value = username;
+        }
+    }
+
+    // ダイアログ表示
+    const dialog = document.getElementById("dialogWrapperDiv");
+    dialog.style.opacity = 0;
+    dialog.style.display = "flex";
+    dialog.style.animation = "fadeIn 1s forwards";
 }
 
 // 次に進める関数
 function next() {
     placeholder.ball = gameData.next;
     gameData.next = Math.floor(Math.random() * 5) + 1;
+}
 
+// ランキング反映用のOKボタンが押されたとき
+function okPressed() {
+    // ランキング反映が必要ないときはそのままリロード
+    if (gameData.score <= lowestScore) {
+        document.body.style.animation = "fadeOut 1s forwards";
+        setTimeout(() => window.location.reload(), 1000);
+        return;
+    }
+
+    // 名前を取得
+    let username = document.getElementById("usernameInput").value;
+
+    // 名前チェック
+    if (username == "") {
+        alert("ランキングで使う名前を入力してください。");
+        return;
+    }
+
+    // ランキングをキャッシュに保存
+    localStorage.setItem("username", username);
+
+    // プッシュ
+    postRanking(username, gameData.score, gameData.ball);
+    document.body.style.animation = "fadeOut 1s forwards";
 }
 
 // ボール作成関数
