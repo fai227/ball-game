@@ -11,7 +11,7 @@ const Events = Matter.Events;
 const bubbleImage = new Image(); bubbleImage.src = "./img/bubble.png";
 const ballImages = []; for (let i = 1; i <= 11; i++) { const tmpImage = new Image(); tmpImage.src = `./img/balls/${i}.png`; ballImages.push(tmpImage) };
 const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600];
-const gameData = { score: 0, ball: 1, next: 1 };
+const gameData = { score: 0, ball: undefined, next: 1 };
 const placeholder = { x: 540, ball: undefined };
 
 // 環境設定
@@ -113,7 +113,7 @@ Events.on(engine, "collisionStart", (e) => {
             // 初めて通るので次を出す
             if (pair.bodyB.gone == undefined) {
                 pair.bodyB.gone = true;
-                next();
+                setTimeout(next, 500);
                 continue;
             }
 
@@ -126,7 +126,7 @@ Events.on(engine, "collisionStart", (e) => {
             // 初めて通るので次を出す
             if (pair.bodyA.gone == undefined) {
                 pair.bodyA.gone = true;
-                next();
+                setTimeout(next, 500);
                 continue;
             }
 
@@ -146,7 +146,7 @@ Events.on(engine, "collisionStart", (e) => {
         Composite.remove(engine.world, pair.bodyA);
         Composite.remove(engine.world, pair.bodyB);
 
-        createBall(averageX, averageY, nextBall);
+        createBall(averageX, averageY, nextBall).gone = true;
     }
 });
 
@@ -157,7 +157,6 @@ render.canvas.addEventListener("pointermove", (e) => {
 });
 render.canvas.addEventListener("pointerup", (e) => {
     if (placeholder.ball == undefined) return;
-
 
     // 最終移動
     const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
@@ -191,6 +190,7 @@ function start() {
 // ゲーム終了関数
 function gameOver() {
     // シミュレーションを止める
+    Runner.stop(runner);
 }
 
 // 次に進める関数
@@ -202,6 +202,23 @@ function next() {
 
 // ボール作成関数
 function createBall(x, y, ballNum) {
+    // ラグビーボール以外
+    if (ballNum != 8) {
+        const ball = Bodies.circle(x, y, BallSize[ballNum - 1] / 2, {
+            render: {
+                sprite: {
+                    texture: `./img/balls/${ballNum}.png`,
+                    xScale: BallSize[ballNum - 1] / 1000,
+                    yScale: BallSize[ballNum - 1] / 1000,
+                },
+            },
+        });
+        ball["tag"] = ballNum;
+        Composite.add(engine.world, ball);
+
+        return ball;
+    }
+
     const ball = Bodies.circle(x, y, BallSize[ballNum - 1] / 2, {
         render: {
             sprite: {
@@ -213,6 +230,8 @@ function createBall(x, y, ballNum) {
     });
     ball["tag"] = ballNum;
     Composite.add(engine.world, ball);
+
+    return ball;
 }
 
 // ボタン関数
