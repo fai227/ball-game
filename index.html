@@ -17,9 +17,9 @@
             <canvas id="canvas" width="1080" height="1980"></canvas>
             <div id="titleDiv">
                 <img src="./img/title.png">
-                <button ontouchstart="" class="titleButton">ゲームスタート</button>
-                <button ontouchstart="" class="titleButton">ランキング</button>
-                <button ontouchstart="" class="titleButton">あそびかた</button>
+                <button ontouchstart="" class="titleButton" onclick="startGameButtonPressed()">ゲームスタート</button>
+                <button ontouchstart="" class="titleButton" onclick="rankingButtonPressed()">ランキング</button>
+                <button ontouchstart="" class="titleButton" onclick="howToPlayButtonPressed()">あそびかた</button>
             </div>
         </div>
         <hr>
@@ -27,8 +27,9 @@
             <h1 class="simpleText">ランキング</h1>
             <table id="rankingTable"></table>
         </div>
+        <hr>
         <div id="howToPlayDiv">
-
+            <h1 class="simpleText">あそびかた</h1>
         </div>
         <footer>
             <div id="repositoryDiv"><a href="https://github.com/fai227/ball-game">プログラム</a>：ファイ</div>
@@ -50,6 +51,7 @@
         </div>
     </div>
 </body>
+<script src="./src/matter.js"></script>
 <script src="./src/rank.js"></script>
 <script src="./src/game.js"></script>
 <script src="./src/window.js"></script>

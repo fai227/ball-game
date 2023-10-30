@@ -29,7 +29,7 @@ function setRanking(rankingData) {
             nameDiv.classList.add("nameDiv");
             td.appendChild(nameDiv);
             const scoreDiv = document.createElement("div");
-            scoreDiv.innerHTML = `<img src="./img/${data.ball}.png" class="rankingBallImg"> ${data.score}点`;
+            scoreDiv.innerHTML = `<img src="./img/balls/${data.ball}.png" class="rankingBallImg"> ${data.score}点`;
             scoreDiv.classList.add("scoreDiv");
             td.appendChild(scoreDiv);
         }

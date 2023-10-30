@@ -13,3 +13,4 @@ function resetElementsSize() {
     canvas.style.width = Math.round(wrappingDivWidth * 0.95) + "px";
     canvas.style.height = Math.round(wrappingDivWidth * 0.95 / 9 * 16) + "px";
 }
+
