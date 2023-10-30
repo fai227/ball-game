@@ -7,7 +7,7 @@
 
 @font-face {
     font-family: "TextFont";
-    src: url("./font/MPLUSRounded1c-Regular.ttf");
+    src: url("./font/MPLUSRounded1c-Medium.ttf");
 }
 
 html {
@@ -151,6 +151,19 @@ footer {
     height: 30%;
     margin-top: 20%;
     margin-bottom: 20%;
+}
+
+#howToPlayWrapperDiv {
+    box-sizing: border-box;
+    width: 90%;
+
+    padding: 1rem;
+    margin: auto;
+
+    color: #5c410a;
+    border: #7a560c 2px solid;
+    border-radius: 2rem;
+    background: #ffeb9a;
 }
 
 #dialogWrapperDiv {

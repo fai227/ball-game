@@ -7,6 +7,9 @@ const Body = Matter.Body;
 const Composite = Matter.Composite;
 const Events = Matter.Events;
 
+// 定数設定
+const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600];
+
 // 環境設定
 const engine = Engine.create();
 const render = Render.create({
