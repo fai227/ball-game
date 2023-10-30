@@ -8,6 +8,7 @@ const Composite = Matter.Composite;
 const Events = Matter.Events;
 
 // 定数設定
+const bubbleImage = new Image(); bubbleImage.src = "./img/bubble.png";
 const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600];
 
 // 環境設定
@@ -55,7 +56,18 @@ function setPlatforms() {
 }
 setPlatforms();
 
-// 
+// UI表示
+Events.on(render, "afterRender", () => {
+    const context = render.context;
+    context.fillStyle = "white";
+    context.textAlign = "center";
+    context.font = Math.round(render.canvas.width * 0.08) + "px 'HeaderFont'";
+
+    context.drawImage(bubbleImage, 100, 20, 300, 300);
+    context.fillText("スコア", 250, 320)
+    context.drawImage(bubbleImage, 680, 20, 300, 300);
+
+});
 
 // スタート関数
 function start() {
