@@ -86,8 +86,8 @@ Events.on(render, "afterRender", () => {
     context.drawImage(bubbleImage, 100, 50, 300, 300);
     context.fillText("スコア", 250, 80);
     context.strokeText("スコア", 250, 80);
-    context.fillText(gameData.score, 250, 215, 250);
-    context.strokeText(gameData.score, 250, 215, 250);
+    context.fillText(gameData.score, 250, 230, 250);
+    context.strokeText(gameData.score, 250, 230, 250);
 
     // ネクスト表示
     context.drawImage(bubbleImage, 680, 50, 300, 300);
