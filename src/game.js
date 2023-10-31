@@ -9,9 +9,9 @@ const Events = Matter.Events;
 
 // 定数設定
 const bubbleImage = new Image(); bubbleImage.src = "./img/bubble.png";
-const ballImages = []; for (let i = 1; i <= 11; i++) { const tmpImage = new Image(); tmpImage.src = `./img/balls/${i}.png`; ballImages.push(tmpImage) };
-const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600];
-const BallScore = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55];
+const ballImages = []; for (let i = 1; i <= 15; i++) { const tmpImage = new Image(); tmpImage.src = `./img/balls/${i}.png`; ballImages.push(tmpImage) };
+const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600, 75, 100, 140, 160];
+const BallScore = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120];
 const gameData = { score: 0, ball: 1, next: 1 };
 const placeholder = { x: 540, ball: undefined };
 
@@ -44,7 +44,12 @@ function setPlatforms() {
     Matter.Body.setStatic(bottomPlatform, true);
     Composite.add(engine.world, bottomPlatform);
 
-    const transparentPlatform = Bodies.rectangle(540, 1980 + 25 / 2 + 50 / 2, 1080, 50);
+    const transparentPlatform = Bodies.rectangle(540, 1980, 1080, 50, {
+        render: {
+            fillStyle: "#00000000",
+        }
+    });
+    transparentPlatform.tag = "outsideBorder";
     Matter.Body.setStatic(transparentPlatform, true);
     Composite.add(engine.world, transparentPlatform);
 
@@ -154,13 +159,19 @@ Events.on(engine, "collisionStart", (e) => {
         Composite.remove(engine.world, pair.bodyA);
         Composite.remove(engine.world, pair.bodyB);
 
-        // ボールを生成
-        createBall(averageX, averageY, nextBall).gone = true;
-
         // スコア反映
         gameData.score += BallScore[nextBall - 1];
-        if (gameData.ball < nextBall) {
-            gameData.ball = nextBall;
+
+        // 次のボールが出来る
+        if (nextBall <= 15) {
+            // 次のボールを生成
+            createBall(averageX, averageY, nextBall).gone = true;
+
+            // スロット反映
+            if (gameData.ball < nextBall) {
+                gameData.ball = nextBall;
+                setSlot(nextBall);
+            }
         }
     }
 });

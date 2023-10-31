@@ -224,6 +224,27 @@ footer {
     border-radius: 1000px;
 }
 
+#slotWrapperDiv {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#slotWrapperDiv img {
+    width: min(80vw, 50vh);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#deamonRing {
+    display: none;
+}
+
 #repositoryDiv {
     float: left;
 }
