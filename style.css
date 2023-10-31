@@ -216,10 +216,10 @@ footer {
     font-family: "TextFont";
     text-align: center;
 
-    width: 90%;
+    width: 70%;
 
     border-color: #D9A560;
-    border-width: 0.5rem;
+    border-width: 0.1rem;
     border-style: solid;
     border-radius: 1000px;
 }
@@ -231,6 +231,9 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
+
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 #slotWrapperDiv img {
