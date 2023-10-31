@@ -44,6 +44,10 @@ function setPlatforms() {
     Matter.Body.setStatic(bottomPlatform, true);
     Composite.add(engine.world, bottomPlatform);
 
+    const transparentPlatform = Bodies.rectangle(540, 1980 + 25 / 2 + 50 / 2, 1080, 50);
+    Matter.Body.setStatic(transparentPlatform, true);
+    Composite.add(engine.world, transparentPlatform);
+
     const dangerLine = Bodies.rectangle(540, 1980 - 1321 + 25 / 2, 1080, 25, {
         render: {
             fillStyle: "#ff000055",
