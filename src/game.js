@@ -50,17 +50,18 @@ function setPlatforms() {
             sprite: { texture: "./img/horizontalBorder.png" }
         }
     });
+    bottomPlatform.tag = 0;
     Matter.Body.setStatic(bottomPlatform, true);
     Composite.add(engine.world, bottomPlatform);
 
-    const transparentPlatform = Bodies.rectangle(540, 1980, 1080, 50, {
+    const bottomTransparentPlatform = Bodies.rectangle(540, 1980, 1080, 50, {
         render: {
             fillStyle: "#00000000",
         }
     });
-    transparentPlatform.tag = "outsideBorder";
-    Matter.Body.setStatic(transparentPlatform, true);
-    Composite.add(engine.world, transparentPlatform);
+    bottomTransparentPlatform.tag = 0;
+    Matter.Body.setStatic(bottomTransparentPlatform, true);
+    Composite.add(engine.world, bottomTransparentPlatform);
 
     const dangerLine = Bodies.rectangle(540, 1980 - 1321 + 25 / 2, 1080, 25, {
         render: {
@@ -130,6 +131,7 @@ Events.on(render, "afterRender", () => {
     }
 });
 
+// 衝突開始
 Events.on(engine, "collisionStart", (e) => {
     for (let i = 0; i < e.pairs.length; i++) {
         let pair = e.pairs[i];
@@ -138,42 +140,25 @@ Events.on(engine, "collisionStart", (e) => {
         if (pair.bodyA.tag == undefined) continue;
         if (pair.bodyB.tag == undefined) continue;
 
-        // Aが危険ラインの時
-        if (pair.bodyA.tag == "dangerLine") {
-            // 初めて通るので次を出す
-            if (pair.bodyB.gone == undefined) {
-                pair.bodyB.gone = true;
-                setTimeout(next, 500);
-                continue;
-            }
+        // 危険ラインの判定はしない
+        if (pair.bodyA.tag == "dangerLine") continue;
+        if (pair.bodyB.tag == "dangerLine") continue;
 
-            // 2回目にあたったので，ゲームオーバー
-            gameOver();
-            break;
-        }
-        // Bが危険ラインの時
-        else if (pair.bodyB.tag == "dangerLine") {
-            // 初めて通るので次を出す
-            if (pair.bodyA.gone == undefined) {
-                pair.bodyA.gone = true;
-                setTimeout(next, 500);
-                continue;
-            }
+        // ボールにあたった判定を設定
+        pair.bodyA.touched = true;
+        pair.bodyB.touched = true;
 
-            // 2回目にあたったので，ゲームオーバー
-            gameOver();
-            break;
+        // 同じボールじゃないときは飛ばす
+        if (pair.bodyA.tag != pair.bodyB.tag) {
+            continue;
         }
 
-        // 同じボールじゃないとき
-        if (pair.bodyA.tag != pair.bodyB.tag) continue;
-
-        // 同じボールの時
+        // 座標を計算
         const averageX = (pair.bodyA.position.x + pair.bodyB.position.x) / 2;
         const averageY = (pair.bodyA.position.y + pair.bodyB.position.y) / 2;
         const nextBall = pair.bodyA.tag + 1;
 
-        // 念のためタグを消す
+        // タグを消す
         pair.bodyA.tag = undefined;
         pair.bodyB.tag = undefined;
 
@@ -184,17 +169,45 @@ Events.on(engine, "collisionStart", (e) => {
         // スコア反映
         GameData["score"] += BallScore[nextBall - 1];
 
-        // 次のボールが出来る
+        // 次のボールがある場合は作成
         if (nextBall <= 15) {
             // 次のボールを生成
-            createBall(averageX, averageY, nextBall).gone = true;
+            createBall(averageX, averageY, nextBall);
 
-            // スロット反映
+            // 最大ボール反映
             if (GameData["ball"] < nextBall) {
                 GameData["ball"] = nextBall;
                 setSlot(nextBall);
             }
         }
+    }
+});
+
+Events.on(engine, "collisionActive", (e) => {
+    for (let i = 0; i < e.pairs.length; i++) {
+        let pair = e.pairs[i];
+
+        // タグなしチェック
+        if (pair.bodyA.tag == undefined) continue;
+        if (pair.bodyB.tag == undefined) continue;
+
+        // Aが危険ラインの時
+        if (pair.bodyA.tag == "dangerLine") {
+            // すでにボールにあたっていたら，ゲームオーバー
+            if (pair.bodyB.touched != undefined) {
+                gameOver();
+                break;
+            }
+        }
+        // Bが危険ラインの時
+        else if (pair.bodyB.tag == "dangerLine") {
+            // すでにボールにあたっていたら，ゲームオーバー
+            if (pair.bodyA.touched != undefined) {
+                gameOver();
+                break;
+            }
+        }
+
     }
 });
 
@@ -256,6 +269,9 @@ function placeBall(x) {
 
     // 次に向けて設定
     placeholder.ball = undefined;
+
+    // 次を0.5秒後に出す
+    setTimeout(next, 500);
 }
 
 function setPlaceholder(x) {
