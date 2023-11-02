@@ -32,6 +32,13 @@ const render = Render.create({
         wireframeBackground: 'black'
     },
 });
+
+// Preload
+for (let i = 0; i < BallImages.length; i++) {
+    render.textures[BallImages[i].src] = BallImages[i];
+}
+
+// 描画開始
 Render.run(render);
 const runner = Runner.create();
 Runner.run(runner, engine);
