@@ -9,7 +9,9 @@ const Events = Matter.Events;
 
 // 定数設定
 const bubbleImage = new Image(); bubbleImage.src = "./img/bubble.png";
-const ballImages = []; for (let i = 1; i <= 15; i++) { const tmpImage = new Image(); tmpImage.src = `./img/balls/${i}.png`; ballImages.push(tmpImage) };
+const BallImages = []; for (let i = 1; i <= 15; i++) { const tmpImage = new Image(); tmpImage.src = `./img/balls/${i}.png`; BallImages.push(tmpImage) };
+const CraneImage = new Image(); CraneImage.src = "./img/crane.png";
+const OpenCraneImage = new Image(); OpenCraneImage.src = "./img/openCrane.png";
 const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600, 75, 100, 140, 160];
 const BallScore = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120];
 const gameData = { score: 0, ball: 1, next: 1 };
@@ -91,6 +93,15 @@ Events.on(render, "afterRender", () => {
     context.textAlign = "center";
     render.context.font = Math.round(render.canvas.width * 0.08) + "px 'HeaderFont'";
 
+    // 開いているクレーン表示
+    if (placeholder.ball == undefined) {
+        context.drawImage(OpenCraneImage, placeholder.x - OpenCraneImage.width / 4, 510 - OpenCraneImage.height / 2, OpenCraneImage.width / 2, OpenCraneImage.height / 2);
+    }
+    // 閉まっているクレーン表示
+    else {
+        context.drawImage(CraneImage, placeholder.x - CraneImage.width / 4, 510 - CraneImage.height / 2, CraneImage.width / 2, CraneImage.height / 2);
+    }
+
     // スコア表示
     context.drawImage(bubbleImage, 100, 50, 300, 300);
     context.fillText("スコア", 250, 80);
@@ -103,12 +114,12 @@ Events.on(render, "afterRender", () => {
     context.fillText("ネクスト", 830, 80);
     context.strokeText("ネクスト", 830, 80);
     const nextBallWidth = BallSize[gameData.next - 1];
-    context.drawImage(ballImages[gameData.next - 1], 830 - nextBallWidth / 2, 205 - nextBallWidth / 2, nextBallWidth, nextBallWidth);
+    context.drawImage(BallImages[gameData.next - 1], 830 - nextBallWidth / 2, 205 - nextBallWidth / 2, nextBallWidth, nextBallWidth);
 
     // プレースホルダーを表示
     if (placeholder.ball != undefined) {
         const placeholderBallWidth = BallSize[placeholder.ball - 1];
-        context.drawImage(ballImages[placeholder.ball - 1], placeholder.x - placeholderBallWidth / 2, 510 - placeholderBallWidth / 2, placeholderBallWidth, placeholderBallWidth);
+        context.drawImage(BallImages[placeholder.ball - 1], placeholder.x - placeholderBallWidth / 2, 510 - placeholderBallWidth / 2, placeholderBallWidth, placeholderBallWidth);
     }
 });
 
@@ -181,22 +192,42 @@ Events.on(runner, 'tick', () => {
 });
 
 // タッチイベント
-render.canvas.addEventListener("mousemove", mousemove);
+render.canvas.addEventListener("mousemove", (e) => {
+    const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
+    moveBall(x);
+});
 
-function mousemove(e) {
+render.canvas.addEventListener("touchstart", (e) => {
+    const x = e.touches[0].clientX * 1080 / render.canvas.clientWidth;
+    e.preventDefault();
+    moveBall(x);
+});
+
+render.canvas.addEventListener("touchmove", (e) => {
+    const x = e.touches[0].clientX * 1080 / render.canvas.clientWidth;
+    e.preventDefault();
+    moveBall(x);
+});
+
+function moveBall(x) {
     if (placeholder.ball == undefined) return;
 
-    const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
     setPlaceholder(x);
 }
 
-render.canvas.addEventListener("pointerup", pointerup);
+render.canvas.addEventListener("mousedown", (e) => {
+    const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
+    placeBall(x);
+});
 
-function pointerup(e) {
+render.canvas.addEventListener("touchend", (e) => {
+    placeBall(placeholder.x);
+    e.preventDefault();
+});
+
+function placeBall(x) {
     if (placeholder.ball == undefined) return;
 
-    // 最終移動
-    const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
     setPlaceholder(x);
 
     // ボール生成
@@ -278,7 +309,7 @@ function okPressed() {
         return;
     }
 
-    // ランキングをキャッシュに保存
+    // 名前をキャッシュに保存
     localStorage.setItem("username", username);
 
     // プッシュ

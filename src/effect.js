@@ -1,4 +1,8 @@
 const slotWrapper = document.getElementById("slotWrapperDiv");
+slotWrapper.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+})
+
 const slot = document.getElementById("slot");
 let previousBallId = 0;
 
