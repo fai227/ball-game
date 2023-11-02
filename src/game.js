@@ -213,7 +213,7 @@ function mousemove(e) {
 render.canvas.addEventListener("touchstart", touchstart);
 
 function touchstart(e) {
-    const x = e.touches[0].clientX * 1080 / render.canvas.clientWidth;
+    const x = (e.touches[0].clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
     e.preventDefault();
     moveBall(x);
 }
@@ -221,7 +221,7 @@ function touchstart(e) {
 render.canvas.addEventListener("touchmove", touchmove);
 
 function touchmove(e) {
-    const x = e.touches[0].clientX * 1080 / render.canvas.clientWidth;
+    const x = (e.touches[0].clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
     e.preventDefault();
     moveBall(x);
 }
