@@ -14,7 +14,7 @@ const CraneImage = new Image(); CraneImage.src = "./img/crane.png";
 const OpenCraneImage = new Image(); OpenCraneImage.src = "./img/openCrane.png";
 const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600, 75, 100, 140, 160];
 const BallScore = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120];
-const gameData = { score: 0, ball: 1, next: 1 };
+const GameData = { "score": 0, "ball": 1, "next": 1 };
 const placeholder = { x: 540, ball: undefined };
 
 // 環境設定
@@ -106,15 +106,15 @@ Events.on(render, "afterRender", () => {
     context.drawImage(bubbleImage, 100, 50, 300, 300);
     context.fillText("スコア", 250, 80);
     context.strokeText("スコア", 250, 80);
-    context.fillText(gameData.score, 250, 230, 250);
-    context.strokeText(gameData.score, 250, 230, 250);
+    context.fillText(GameData["score"], 250, 230, 250);
+    context.strokeText(GameData["score"], 250, 230, 250);
 
     // ネクスト表示
     context.drawImage(bubbleImage, 680, 50, 300, 300);
     context.fillText("ネクスト", 830, 80);
     context.strokeText("ネクスト", 830, 80);
-    const nextBallWidth = BallSize[gameData.next - 1];
-    context.drawImage(BallImages[gameData.next - 1], 830 - nextBallWidth / 2, 205 - nextBallWidth / 2, nextBallWidth, nextBallWidth);
+    const nextBallWidth = BallSize[GameData["next"] - 1];
+    context.drawImage(BallImages[GameData["next"] - 1], 830 - nextBallWidth / 2, 205 - nextBallWidth / 2, nextBallWidth, nextBallWidth);
 
     // プレースホルダーを表示
     if (placeholder.ball != undefined) {
@@ -175,7 +175,7 @@ Events.on(engine, "collisionStart", (e) => {
         Composite.remove(engine.world, pair.bodyB);
 
         // スコア反映
-        gameData.score += BallScore[nextBall - 1];
+        GameData["score"] += BallScore[nextBall - 1];
 
         // 次のボールが出来る
         if (nextBall <= 15) {
@@ -183,8 +183,8 @@ Events.on(engine, "collisionStart", (e) => {
             createBall(averageX, averageY, nextBall).gone = true;
 
             // スロット反映
-            if (gameData.ball < nextBall) {
-                gameData.ball = nextBall;
+            if (GameData["ball"] < nextBall) {
+                GameData["ball"] = nextBall;
                 setSlot(nextBall);
             }
         }
@@ -196,22 +196,28 @@ Events.on(runner, 'tick', () => {
 });
 
 // タッチイベント
-render.canvas.addEventListener("mousemove", (e) => {
+render.canvas.addEventListener("mousemove", mousemove);
+
+function mousemove(e) {
     const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
     moveBall(x);
-});
+}
 
-render.canvas.addEventListener("touchstart", (e) => {
+render.canvas.addEventListener("touchstart", touchstart);
+
+function touchstart(e) {
     const x = e.touches[0].clientX * 1080 / render.canvas.clientWidth;
     e.preventDefault();
     moveBall(x);
-});
+}
 
-render.canvas.addEventListener("touchmove", (e) => {
+render.canvas.addEventListener("touchmove", touchmove);
+
+function touchmove(e) {
     const x = e.touches[0].clientX * 1080 / render.canvas.clientWidth;
     e.preventDefault();
     moveBall(x);
-});
+}
 
 function moveBall(x) {
     if (placeholder.ball == undefined) return;
@@ -219,15 +225,19 @@ function moveBall(x) {
     setPlaceholder(x);
 }
 
-render.canvas.addEventListener("mousedown", (e) => {
+render.canvas.addEventListener("mousedown", mousedown);
+
+function mousedown(e) {
     const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
     placeBall(x);
-});
+}
 
-render.canvas.addEventListener("touchend", (e) => {
+render.canvas.addEventListener("touchend", touchend);
+
+function touchend(e) {
     placeBall(placeholder.x);
     e.preventDefault();
-});
+}
 
 function placeBall(x) {
     if (placeholder.ball == undefined) return;
@@ -264,14 +274,17 @@ function gameOver() {
     // 操作不能
     placeholder.ball = undefined;
     render.canvas.removeEventListener("mousemove", mousemove);
-    render.canvas.removeEventListener("pointerup", pointerup);
+    render.canvas.removeEventListener("touchstart", touchstart);
+    render.canvas.removeEventListener("touchmove", touchmove);
+    render.canvas.removeEventListener("touchend", touchend);
+    render.canvas.removeEventListener("mousedown", mousedown);
 
     // シミュレーションを止める
     Runner.stop(runner);
 
     // ランキングチェック
-    document.getElementById("scoreSpan").textContent = gameData.score;
-    if (gameData.score <= lowestScore) {  // ランキング用のInputを非表示
+    document.getElementById("scoreSpan").textContent = GameData["score"];
+    if (GameData["score"] <= lowestScore) {  // ランキング用のInputを非表示
         document.getElementById("nameInputSpan").style.display = "none";
     }
     else {  // ランキング用のInputを表示
@@ -291,14 +304,14 @@ function gameOver() {
 
 // 次に進める関数
 function next() {
-    placeholder.ball = gameData.next;
-    gameData.next = Math.floor(Math.random() * 5) + 1;
+    placeholder.ball = GameData["next"];
+    GameData["next"] = Math.floor(Math.random() * 5) + 1;
 }
 
 // ランキング反映用のOKボタンが押されたとき
 function okPressed() {
     // ランキング反映が必要ないときはそのままリロード
-    if (gameData.score <= lowestScore) {
+    if (GameData["score"] <= lowestScore) {
         document.body.style.animation = "fadeOut 1s forwards";
         setTimeout(() => window.location.reload(), 1000);
         return;
@@ -317,7 +330,7 @@ function okPressed() {
     localStorage.setItem("username", username);
 
     // プッシュ
-    postRanking(username, gameData.score, gameData.ball);
+    postRanking(username, GameData["score"], GameData["ball"]);
     document.body.style.animation = "fadeOut 1s forwards";
 }
 
