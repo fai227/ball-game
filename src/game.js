@@ -359,9 +359,12 @@ function okPressed() {
 
 // ボール作成関数
 function createBall(x, y, ballNum) {
+    let ball = undefined;
+
+    // ボディ生成
     // ラグビーボール以外
     if (ballNum != 8) {
-        const ball = Bodies.circle(x, y, BallSize[ballNum - 1] / 2, {
+        ball = Bodies.circle(x, y, BallSize[ballNum - 1] / 2, {
             render: {
                 sprite: {
                     texture: `./img/balls/${ballNum}.png`,
@@ -370,23 +373,41 @@ function createBall(x, y, ballNum) {
                 },
             },
         });
-        ball["tag"] = ballNum;
-        Composite.add(engine.world, ball);
-
-        return ball;
+    }
+    // ラグビーボール
+    else {
+        ball = Bodies.fromVertices(x, y, eightVertices, {
+            render: {
+                sprite: {
+                    texture: `./img/balls/${ballNum}.png`,
+                    xScale: BallSize[ballNum - 1] / 1000,
+                    yScale: BallSize[ballNum - 1] / 1000,
+                },
+            },
+        });
     }
 
-    const ball = Bodies.fromVertices(x, y, eightVertices, {
-        render: {
-            sprite: {
-                texture: `./img/balls/${ballNum}.png`,
-                xScale: BallSize[ballNum - 1] / 1000,
-                yScale: BallSize[ballNum - 1] / 1000,
-            },
-        },
-    });
+    // 反発係数設定
+    switch (ballNum) {
+        case 2:
+            ball.restitution = 0.8;
+            break;
+        case 3:
+            ball.restitution = 0.7;
+            break;
+    }
+
+    // 重さ設定
+    switch (ballNum) {
+        case 3:
+            Body.setMass(ball, 5);
+            break;
+    }
+
+    // 全体設定
     ball["tag"] = ballNum;
     Composite.add(engine.world, ball);
+
 
     return ball;
 }
