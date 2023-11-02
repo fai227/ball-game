@@ -166,6 +166,10 @@ Events.on(engine, "collisionStart", (e) => {
         const averageY = (pair.bodyA.position.y + pair.bodyB.position.y) / 2;
         const nextBall = pair.bodyA.tag + 1;
 
+        // 念のためタグを消す
+        pair.bodyA.tag = undefined;
+        pair.bodyB.tag = undefined;
+
         // ボールを削除
         Composite.remove(engine.world, pair.bodyA);
         Composite.remove(engine.world, pair.bodyB);
