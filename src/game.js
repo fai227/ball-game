@@ -15,7 +15,7 @@ const OpenCraneImage = new Image(); OpenCraneImage.src = "./img/openCrane.png";
 const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600, 75, 100, 140, 160]; for (let i = 0; i < BallSize.length; i++) BallSize[i] -= 10;
 const BallScore = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120];
 const GameData = { "score": 0, "ball": 1, "next": 1 };
-const placeholder = { x: 540, ball: undefined };
+const Placeholder = { x: 540, ball: undefined };
 
 // 環境設定
 const engine = Engine.create();
@@ -102,12 +102,12 @@ Events.on(render, "afterRender", () => {
     render.context.font = Math.round(render.canvas.width * 0.08) + "px 'HeaderFont'";
 
     // 開いているクレーン表示
-    if (placeholder.ball == undefined) {
-        context.drawImage(OpenCraneImage, placeholder.x - OpenCraneImage.width / 4, 510 - OpenCraneImage.height / 2, OpenCraneImage.width / 2, OpenCraneImage.height / 2);
+    if (Placeholder.ball == undefined) {
+        context.drawImage(OpenCraneImage, Placeholder.x - OpenCraneImage.width / 4, 510 - OpenCraneImage.height / 2, OpenCraneImage.width / 2, OpenCraneImage.height / 2);
     }
     // 閉まっているクレーン表示
     else {
-        context.drawImage(CraneImage, placeholder.x - CraneImage.width / 4, 510 - CraneImage.height / 2, CraneImage.width / 2, CraneImage.height / 2);
+        context.drawImage(CraneImage, Placeholder.x - CraneImage.width / 4, 510 - CraneImage.height / 2, CraneImage.width / 2, CraneImage.height / 2);
     }
 
     // スコア表示
@@ -125,9 +125,9 @@ Events.on(render, "afterRender", () => {
     context.drawImage(BallImages[GameData["next"] - 1], 830 - nextBallWidth / 2, 205 - nextBallWidth / 2, nextBallWidth, nextBallWidth);
 
     // プレースホルダーを表示
-    if (placeholder.ball != undefined) {
-        const placeholderBallWidth = BallSize[placeholder.ball - 1];
-        context.drawImage(BallImages[placeholder.ball - 1], placeholder.x - placeholderBallWidth / 2, 510 - placeholderBallWidth / 2, placeholderBallWidth, placeholderBallWidth);
+    if (Placeholder.ball != undefined) {
+        const PlaceholderBallWidth = BallSize[Placeholder.ball - 1];
+        context.drawImage(BallImages[Placeholder.ball - 1], Placeholder.x - PlaceholderBallWidth / 2, 510 - PlaceholderBallWidth / 2, PlaceholderBallWidth, PlaceholderBallWidth);
     }
 });
 
@@ -240,7 +240,7 @@ function touchmove(e) {
 }
 
 function moveBall(x) {
-    if (placeholder.ball == undefined) return;
+    if (Placeholder.ball == undefined) return;
 
     setPlaceholder(x);
 }
@@ -255,20 +255,20 @@ function mousedown(e) {
 render.canvas.addEventListener("touchend", touchend);
 
 function touchend(e) {
-    placeBall(placeholder.x);
+    placeBall(Placeholder.x);
     e.preventDefault();
 }
 
 function placeBall(x) {
-    if (placeholder.ball == undefined) return;
+    if (Placeholder.ball == undefined) return;
 
     setPlaceholder(x);
 
     // ボール生成
-    createBall(placeholder.x, 510, placeholder.ball);
+    createBall(Placeholder.x, 510, Placeholder.ball);
 
     // 次に向けて設定
-    placeholder.ball = undefined;
+    Placeholder.ball = undefined;
 
     // 次を0.5秒後に出す
     setTimeout(next, 500);
@@ -276,14 +276,14 @@ function placeBall(x) {
 
 function setPlaceholder(x) {
     // 左に行きすぎな場合の修正
-    if (x < BallSize[placeholder.ball - 1] / 2 + 25 / 2) {
-        x = BallSize[placeholder.ball - 1] / 2 + 25 / 2;
+    if (x < BallSize[Placeholder.ball - 1] / 2 + 25 / 2) {
+        x = BallSize[Placeholder.ball - 1] / 2 + 25 / 2;
     }
     // 右に行きすぎな場合の修正
-    else if (x > 1080 - BallSize[placeholder.ball - 1] / 2 - 25 / 2) {
-        x = 1080 - BallSize[placeholder.ball - 1] / 2 - 25 / 2;
+    else if (x > 1080 - BallSize[Placeholder.ball - 1] / 2 - 25 / 2) {
+        x = 1080 - BallSize[Placeholder.ball - 1] / 2 - 25 / 2;
     }
-    placeholder.x = x;
+    Placeholder.x = x;
 }
 
 
@@ -295,7 +295,7 @@ function start() {
 // ゲーム終了関数
 function gameOver() {
     // 操作不能
-    placeholder.ball = undefined;
+    Placeholder.ball = undefined;
     render.canvas.removeEventListener("mousemove", mousemove);
     render.canvas.removeEventListener("touchstart", touchstart);
     render.canvas.removeEventListener("touchmove", touchmove);
@@ -327,7 +327,7 @@ function gameOver() {
 
 // 次に進める関数
 function next() {
-    placeholder.ball = GameData["next"];
+    Placeholder.ball = GameData["next"];
     GameData["next"] = Math.floor(Math.random() * 5) + 1;
 }
 

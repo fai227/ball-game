@@ -110,7 +110,7 @@ function setSlot(ballId) {
 }
 
 // ボール辞典
-const BallName = ["ビーだま", "スーパーボール", "ピンポンだま", "ゴルフボール", "ビリヤードだま", "テニスボール", "やきゅうボール", "ラグビーボール", "バレーボール", "サッカーボール", "バスケットボール"];
+const BallName = ["ビーだま", "スーパーボール", "ピンポンだま", "ゴルフボール", "ビリヤードだま", "テニスボール", "やきゅうボール", "ラグビーボール", "バレーボール", "サッカーボール", "バスケットボール", "???"];
 let dictionaryIndex = 1;
 function setNextDictionary() {
     dictionaryIndex++;
@@ -127,7 +127,16 @@ function setPreviousDictionary() {
     setDictionary();
 }
 function setDictionary() {
-    document.getElementById("dictionaryImg").src = `./img/balls/${dictionaryIndex}.png`;
-    document.getElementById("dictionaryH2").textContent = BallName[dictionaryIndex - 1];
+    // ハテナ表示
+    if (dictionaryIndex == BallName.length) {
+        document.getElementById("dictionaryId").textContent = `No. ??`;
+        document.getElementById("dictionaryImg").src = `./img/balls/15.png`;
+        document.getElementById("dictionaryH2").textContent = BallName[dictionaryIndex - 1];
+    }
+    else {
+        document.getElementById("dictionaryId").textContent = `No. ${dictionaryIndex}`;
+        document.getElementById("dictionaryImg").src = `./img/balls/${dictionaryIndex}.png`;
+        document.getElementById("dictionaryH2").textContent = BallName[dictionaryIndex - 1];
+    }
 }
 setDictionary();
