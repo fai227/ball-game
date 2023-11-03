@@ -169,6 +169,25 @@ footer {
     background: #ffeb9a;
 }
 
+#evolutionDiv {
+    box-sizing: border-box;
+    width: 90%;
+
+    padding: 1rem;
+    margin: auto;
+
+    color: #5c410a;
+    border: #7a560c 2px solid;
+    border-radius: 2rem;
+    background: #ffeb9a;
+}
+
+#evolutionDiv img {
+    display: block;
+    margin: 1rem auto;
+    width: 40%;
+}
+
 #dialogWrapperDiv {
     position: fixed;
     top: 0;
@@ -299,6 +318,15 @@ footer {
 
 .rankingBallImg {
     height: 2rem;
+}
+
+.nextButton {
+    display: inline-block;
+    font-size: xx-large;
+
+    padding: 1rem;
+    margin: 0rem 0.5rem;
+    width: 40%;
 }
 
 @keyframes fadeIn {

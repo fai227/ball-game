@@ -12,7 +12,7 @@ const bubbleImage = new Image(); bubbleImage.src = "./img/bubble.png";
 const BallImages = []; for (let i = 1; i <= 15; i++) { const tmpImage = new Image(); tmpImage.src = `./img/balls/${i}.png`; BallImages.push(tmpImage) };
 const CraneImage = new Image(); CraneImage.src = "./img/crane.png";
 const OpenCraneImage = new Image(); OpenCraneImage.src = "./img/openCrane.png";
-const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600, 75, 100, 140, 160];
+const BallSize = [75, 100, 140, 160, 200, 250, 295, 360, 400, 500, 600, 75, 100, 140, 160]; for (let i = 0; i < BallSize.length; i++) BallSize[i] -= 10;
 const BallScore = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120];
 const GameData = { "score": 0, "ball": 1, "next": 1 };
 const placeholder = { x: 540, ball: undefined };
