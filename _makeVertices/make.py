@@ -3,6 +3,7 @@ import numpy as np
 import json
 
 fileName = "_makeVertices/shape.png"
+size = 350
 
 image = np.array(Image.open(fileName))
 
@@ -20,8 +21,8 @@ for y in range(len(imageArray)):
         if imageArray[y][x] != previous:
             previous = imageArray[y][x]
             vertices.append({
-                "x": (x-25) * 180 / 25,
-                "y": (y-25) * 180 / 25,
+                "x": (x-25) * size / 50,
+                "y": (y-25) * size / 50,
             })
 
 with open("src/vertices.js", "w") as f:
