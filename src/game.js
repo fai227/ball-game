@@ -42,20 +42,25 @@ for (let i = 1; i <= BallSize.length; i++) {
     BallImages.push(tmpImage)
     render.textures[`./img/balls/${i}.png`] = tmpImage;
 }
+const overlayImage = new Image();
+overlayImage.src = "./img/balls/overlay.png";
+render.textures["./img/balls/overlay.png"] = overlayImage;
+const overlay8Image = new Image();
+overlay8Image.src = "./img/balls/overlay8.png";
+render.textures["./img/balls/overlay8.png"] = overlay8Image;
 
 // 描画開始
 Render.run(render);
 const runner = Runner.create();
 Runner.run(runner, engine);
 
-// 初期設定
-function setPlatforms() {
-    const bottomPlatform = Bodies.rectangle(540, 1980 - 25 / 2, 1080, 25, {
+function setPlatform() {
+    // 初期設定
+    const bottomPlatform = Bodies.rectangle(540, 980 - 25 / 2, 1080, 25, {
         render: {
             sprite: { texture: "./img/horizontalBorder.png" }
         }
     });
-    bottomPlatform.tag = 0;
     Matter.Body.setStatic(bottomPlatform, true);
     Composite.add(engine.world, bottomPlatform);
 
@@ -64,11 +69,10 @@ function setPlatforms() {
             fillStyle: "#00000000",
         }
     });
-    bottomTransparentPlatform.tag = 0;
     Matter.Body.setStatic(bottomTransparentPlatform, true);
     Composite.add(engine.world, bottomTransparentPlatform);
 
-    const dangerLine = Bodies.rectangle(540, 1980 - 1321 + 25 / 2, 1080, 25, {
+    const dangerLine = Bodies.rectangle(540, 1980 - 1321 - 25 / 2, 1080, 25, {
         render: {
             fillStyle: "#ff000055",
         }
@@ -94,7 +98,7 @@ function setPlatforms() {
     Matter.Body.setStatic(rightPlatform, true);
     Composite.add(engine.world, rightPlatform);
 }
-setPlatforms();
+setPlatform();
 
 // 物理演算イベント
 let previous = 0;
@@ -137,7 +141,6 @@ Events.on(render, "afterRender", () => {
     }
 });
 
-// 衝突開始
 Events.on(engine, "collisionStart", (e) => {
     for (let i = 0; i < e.pairs.length; i++) {
         let pair = e.pairs[i];
@@ -149,10 +152,6 @@ Events.on(engine, "collisionStart", (e) => {
         // 危険ラインの判定はしない
         if (pair.bodyA.tag == "dangerLine") continue;
         if (pair.bodyB.tag == "dangerLine") continue;
-
-        // ボールにあたった判定を設定
-        pair.bodyA.touched = true;
-        pair.bodyB.touched = true;
 
         // 同じボールじゃないときは飛ばす
         if (pair.bodyA.tag != pair.bodyB.tag) {
@@ -197,23 +196,60 @@ Events.on(engine, "collisionActive", (e) => {
         if (pair.bodyA.tag == undefined) continue;
         if (pair.bodyB.tag == undefined) continue;
 
-        // Aが危険ラインの時
         if (pair.bodyA.tag == "dangerLine") {
-            // すでにボールにあたっていたら，ゲームオーバー
-            if (pair.bodyB.touched != undefined) {
-                gameOver();
-                break;
+            // 衝突開始時判定
+            if (pair.bodyB.startTime == undefined) {
+                pair.bodyB.startTime = performance.now();
+                pair.bodyB.render.overlay = true;
             }
-        }
-        // Bが危険ラインの時
-        else if (pair.bodyB.tag == "dangerLine") {
-            // すでにボールにあたっていたら，ゲームオーバー
-            if (pair.bodyA.touched != undefined) {
-                gameOver();
-                break;
-            }
-        }
 
+            // 色の濃さを設定
+            const percentage = (performance.now() - pair.bodyB.startTime) / 3000;
+            pair.bodyB.render.overlayOpacity = percentage;
+
+            // 3秒後にゲームオーバー
+            if (percentage >= 1) {
+                gameOver();
+                break;
+            }
+        }
+        else if (pair.bodyB.tag == "dangerLine") {
+            // 衝突開始時判定
+            if (pair.bodyA.startTime == undefined) {
+                pair.bodyA.startTime = performance.now();
+                pair.bodyA.render.overlay = true;
+            }
+
+            // オーバーレイ表示
+            const percentage = (performance.now() - pair.bodyA.startTime) / 3000;
+            pair.bodyA.render.overlayOpacity = percentage;
+
+            // 3秒後にゲームオーバー
+            if (percentage >= 1) {
+                gameOver();
+                break;
+            }
+        }
+    }
+});
+
+Events.on(engine, "collisionEnd", (e) => {
+    for (let i = 0; i < e.pairs.length; i++) {
+        let pair = e.pairs[i];
+
+        // タグなしチェック
+        if (pair.bodyA.tag == undefined) continue;
+        if (pair.bodyB.tag == undefined) continue;
+
+        // 衝突終了なので時間計測を終了
+        if (pair.bodyA.tag == "dangerLine") {
+            pair.bodyB.startTime = undefined;
+            pair.bodyB.render.overlay = undefined;
+        }
+        else if (pair.bodyB.tag == "dangerLine") {
+            pair.bodyA.startTime = undefined;
+            pair.bodyA.render.overlay = undefined;
+        }
     }
 });
 
@@ -336,7 +372,7 @@ async function gameOver() {
     }
 
     // ダイアログ表示
-    await sleep(1000);
+    // await sleep(1000);
     const dialog = document.getElementById("dialogWrapperDiv");
     dialog.style.opacity = 0;
     dialog.style.display = "flex";
@@ -386,6 +422,7 @@ function createBall(x, y, ballNum) {
             render: {
                 sprite: {
                     texture: `./img/balls/${ballNum}.png`,
+                    overlayTexture: "./img/balls/overlay.png",
                     xScale: BallSize[ballNum - 1] / 1000,
                     yScale: BallSize[ballNum - 1] / 1000,
                 },
@@ -398,6 +435,7 @@ function createBall(x, y, ballNum) {
             render: {
                 sprite: {
                     texture: `./img/balls/${ballNum}.png`,
+                    overlayTexture: "./img/balls/overlay8.png",
                     xScale: BallSize[ballNum - 1] / 1000,
                     yScale: BallSize[ballNum - 1] / 1000,
                 },

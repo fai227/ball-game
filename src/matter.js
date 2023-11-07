@@ -9360,6 +9360,19 @@
                                     texture.height * sprite.yScale
                                 );
 
+                                // 色変更設定有効時
+                                if (part.render.overlay) {
+                                    const overlayTexture = _getTexture(render, sprite.overlayTexture);
+                                    c.globalAlpha = part.render.overlayOpacity;
+                                    c.drawImage(
+                                        overlayTexture,
+                                        overlayTexture.width * -sprite.xOffset * sprite.xScale,
+                                        overlayTexture.height * -sprite.yOffset * sprite.yScale,
+                                        overlayTexture.width * sprite.xScale,
+                                        overlayTexture.height * sprite.yScale
+                                    );
+                                }
+
                                 // revert translation, hopefully faster than save / restore
                                 c.rotate(-part.angle);
                                 c.translate(-part.position.x, -part.position.y);
