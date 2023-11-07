@@ -4,8 +4,8 @@
 const Engine = Matter.Engine;
 const Render = Matter.Render;
 const Runner = Matter.Runner;
-const Bodies = Matter.Bodies;
 const Body = Matter.Body;
+const Bodies = Matter.Bodies;
 const Composite = Matter.Composite;
 const Events = Matter.Events;
 
@@ -61,7 +61,7 @@ function setPlatform() {
             sprite: { texture: "./img/horizontalBorder.png" }
         }
     });
-    Matter.Body.setStatic(bottomPlatform, true);
+    Body.setStatic(bottomPlatform, true);
     Composite.add(engine.world, bottomPlatform);
 
     const bottomTransparentPlatform = Bodies.rectangle(540, 1980, 1080, 50, {
@@ -69,7 +69,7 @@ function setPlatform() {
             fillStyle: "#00000000",
         }
     });
-    Matter.Body.setStatic(bottomTransparentPlatform, true);
+    Body.setStatic(bottomTransparentPlatform, true);
     Composite.add(engine.world, bottomTransparentPlatform);
 
     const dangerLine = Bodies.rectangle(540, 1980 - 1321 - 25 / 2, 1080, 25, {
@@ -79,7 +79,7 @@ function setPlatform() {
     });
     dangerLine.isSensor = true;
     dangerLine.tag = "dangerLine";
-    Matter.Body.setStatic(dangerLine, true);
+    Body.setStatic(dangerLine, true);
     Composite.add(engine.world, dangerLine);
 
     const leftPlatform = Bodies.rectangle(25 / 2, 1980 - 1321 / 2, 25, 1321, {
@@ -87,7 +87,7 @@ function setPlatform() {
             sprite: { texture: "./img/verticalBorder.png" }
         }
     });
-    Matter.Body.setStatic(leftPlatform, true);
+    Body.setStatic(leftPlatform, true);
     Composite.add(engine.world, leftPlatform);
 
     const rightPlatform = Bodies.rectangle(1080 - 25 / 2, 1980 - 1321 / 2, 25, 1321, {
@@ -95,7 +95,7 @@ function setPlatform() {
             sprite: { texture: "./img/verticalBorder.png" }
         }
     });
-    Matter.Body.setStatic(rightPlatform, true);
+    Body.setStatic(rightPlatform, true);
     Composite.add(engine.world, rightPlatform);
 }
 setPlatform();
@@ -445,18 +445,36 @@ function createBall(x, y, ballNum) {
 
     // 反発係数設定
     switch (ballNum) {
+        // スーパーボール
         case 2:
             ball.restitution = 0.8;
             break;
+
+        // ピンポンだま
         case 3:
             ball.restitution = 0.7;
+            break;
+
+        // デフォルト
+        default:
+            ball.restitution = 0;
             break;
     }
 
     // 重さ設定
     switch (ballNum) {
+        // ピンポンだま
         case 3:
             Body.setMass(ball, 5);
+            break;
+
+        // ビリヤードだま
+        case 5:
+            Body.setMass(ball, 40);
+            break;
+
+        default:
+            Body.setMass(ball, 20);
             break;
     }
 
