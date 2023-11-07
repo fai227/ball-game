@@ -56,7 +56,7 @@ Runner.run(runner, engine);
 
 function setPlatform() {
     // 初期設定
-    const bottomPlatform = Bodies.rectangle(540, 980 - 25 / 2, 1080, 25, {
+    const bottomPlatform = Bodies.rectangle(540, 1980 - 25 / 2, 1080, 25, {
         render: {
             sprite: { texture: "./img/horizontalBorder.png" }
         }
