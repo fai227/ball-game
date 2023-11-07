@@ -1,3 +1,5 @@
+/// <reference path="matter.js"/>
+
 // インポート
 const Engine = Matter.Engine;
 const Render = Matter.Render;
@@ -289,7 +291,6 @@ function setPlaceholder(x) {
     }
     Placeholder.x = x;
 }
-
 
 // スタート関数
 function start() {
