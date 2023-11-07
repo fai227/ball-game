@@ -95,6 +95,7 @@ function setPlatforms() {
 setPlatforms();
 
 // 物理演算イベント
+let previous = 0;
 Events.on(render, "afterRender", () => {
     // 初期設定
     const context = render.context;
@@ -296,7 +297,7 @@ function start() {
 }
 
 // ゲーム終了関数
-function gameOver() {
+async function gameOver() {
     // 操作不能
     Placeholder.ball = undefined;
     render.canvas.removeEventListener("mousemove", mousemove);
@@ -305,8 +306,20 @@ function gameOver() {
     render.canvas.removeEventListener("touchend", touchend);
     render.canvas.removeEventListener("mousedown", mousedown);
 
-    // シミュレーションを止める
+    // コールバックをすべて消す
+    Events.off(engine, "collisionStart");
+    Events.off(engine, "collisionActive");
+
+    // シミュレーションストップ
     Runner.stop(runner);
+
+    // ボールを消していく
+    const Balls = engine.world.bodies.filter((e) => { return e.tag && e.tag > 0 });
+    for (let i = 0; i < Balls.length; i++) {
+        const ball = Balls[i];
+        Composite.remove(engine.world, ball);
+        await sleep(100);
+    }
 
     // ランキングチェック
     document.getElementById("scoreSpan").textContent = GameData["score"];
@@ -322,6 +335,7 @@ function gameOver() {
     }
 
     // ダイアログ表示
+    await sleep(1000);
     const dialog = document.getElementById("dialogWrapperDiv");
     dialog.style.opacity = 0;
     dialog.style.display = "flex";
@@ -447,3 +461,6 @@ function howToPlayButtonPressed() {
     });
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
