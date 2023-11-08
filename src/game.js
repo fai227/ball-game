@@ -473,6 +473,13 @@ function createBall(x, y, ballNum) {
             Body.setMass(ball, 40);
             break;
 
+        // サッカーボール
+        case 10:
+        // バスケットボール
+        case 11:
+            Body.setMass(ball, 60);
+            break;
+
         default:
             Body.setMass(ball, 20);
             break;
