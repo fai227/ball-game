@@ -46,6 +46,16 @@ body:before {
     background-size: cover;
 }
 
+header {
+    display: block;
+
+    height: 1.5rem;
+    width: 100%;
+
+    overflow: hidden;
+
+}
+
 hr {
     height: 0.1rem;
     width: 90%;
@@ -128,6 +138,19 @@ footer {
 
     display: flex;
     justify-content: space-between;
+}
+
+#banner {
+    margin: 0;
+    padding: 0;
+
+    white-space: nowrap;
+    animation-fill-mode: forwards;
+}
+
+#banner p {
+    margin: 0;
+    padding: 0;
 }
 
 #gameDiv {
@@ -327,6 +350,16 @@ footer {
     padding: 1rem;
     margin: 0rem 0.5rem;
     width: 40%;
+}
+
+@keyframes animateBanner {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 @keyframes fadeIn {

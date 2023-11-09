@@ -56,7 +56,7 @@ Runner.run(runner, engine);
 
 function setPlatform() {
     // 初期設定
-    const bottomPlatform = Bodies.rectangle(540, 1980 - 25 / 2, 1080, 25, {
+    const bottomPlatform = Bodies.rectangle(540, 1480 - 25 / 2, 1080, 25, {
         render: {
             sprite: { texture: "./img/horizontalBorder.png" }
         }
@@ -351,7 +351,8 @@ async function gameOver() {
     Runner.stop(runner);
 
     // ボールを消していく
-    const Balls = engine.world.bodies.filter((e) => { return e.tag && e.tag > 0 });
+    const Balls = engine.world.bodies.filter((e) => { return e.tag && e.tag > 0 });  // ボールでフィルター
+    Balls.sort((a, b) => { return a.position.y - b.position.u });  // Y座標でソート
     for (let i = 0; i < Balls.length; i++) {
         const ball = Balls[i];
         Composite.remove(engine.world, ball);
@@ -473,22 +474,15 @@ function createBall(x, y, ballNum) {
             Body.setMass(ball, 40);
             break;
 
-        // サッカーボール
-        case 10:
-        // バスケットボール
-        case 11:
-            Body.setMass(ball, 60);
+        default:
+            Body.setMass(ball, BallSize[ballNum - 1] / 10);
             break;
 
-        default:
-            Body.setMass(ball, 20);
-            break;
     }
 
     // 全体設定
     ball["tag"] = ballNum;
     Composite.add(engine.world, ball);
-
 
     return ball;
 }

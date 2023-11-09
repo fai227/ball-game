@@ -140,3 +140,42 @@ function setDictionary() {
     }
 }
 setDictionary();
+
+const AdTexts = shuffle([
+    "鋭意開発中‼",
+    "ブックマークしてね",
+    "共有ボタンからホームに追加してね",
+    "スーパーボールとピンポン玉は結構跳ねるよ",
+    "ビリヤード玉は割と重いよ",
+]);
+const Banner = document.getElementById("banner");
+const BannerContent = document.getElementById("bannerContent");
+let adIndex = -1;
+function showNextBanner() {
+    adIndex = (adIndex + 1) % AdTexts.length;
+    BannerContent.textContent = AdTexts[adIndex];
+    Banner.style.animation = "";
+    Banner.style.animation = "animateBanner 30s linear infinite";
+    setTimeout(showNextBanner, 30 * 1000);
+}
+
+// 開始5秒後にバナー移動開始
+setTimeout(showNextBanner, 5 * 1000);
+
+function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}
