@@ -468,16 +468,6 @@ function createBall(x, y, ballNum) {
         case 3:
             Body.setMass(ball, 5);
             break;
-
-        // ビリヤードだま
-        case 5:
-            Body.setMass(ball, 40);
-            break;
-
-        default:
-            Body.setMass(ball, BallSize[ballNum - 1] / 10);
-            break;
-
     }
 
     // 全体設定
