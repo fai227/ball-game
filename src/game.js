@@ -330,7 +330,10 @@ function setPlaceholder(x) {
 
 // スタート関数
 function start() {
-    next();
+    // ゲームデータをロード可能ならネクストを出さない
+    if (!loadData()) {
+        next();
+    }
 }
 
 // ゲーム終了関数
@@ -342,6 +345,8 @@ async function gameOver() {
     render.canvas.removeEventListener("touchmove", touchmove);
     render.canvas.removeEventListener("touchend", touchend);
     render.canvas.removeEventListener("mousedown", mousedown);
+    window.removeEventListener("beforeunload", saveData);
+    window.removeEventListener("blur", saveData);
 
     // コールバックをすべて消す
     Events.off(engine, "collisionStart");
@@ -413,7 +418,7 @@ function okPressed() {
 }
 
 // ボール作成関数
-function createBall(x, y, ballNum) {
+function createBall(x, y, ballNum, angle) {
     let ball = undefined;
 
     // ボディ生成
@@ -470,10 +475,15 @@ function createBall(x, y, ballNum) {
             break;
     }
 
-    // 全体設定
+    // タグ設定
     ball["tag"] = ballNum;
-    Composite.add(engine.world, ball);
 
+    // 角度が設定される場合は設定
+    if (angle != undefined) {
+        Body.setAngle(ball, angle);
+    }
+
+    Composite.add(engine.world, ball);
     return ball;
 }
 

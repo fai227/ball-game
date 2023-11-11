@@ -3,7 +3,7 @@ const JavaScriptObfuscator = require("javascript-obfuscator");
 const fs = require("fs");
 
 // 定数
-const fileNames = ["matter", "vertices", "rank", "effect", "game", "window"];
+const fileNames = ["matter", "vertices", "rank", "effect", "game", "window", "loader"];
 
 // ファイル読込み
 let allScript = "";
