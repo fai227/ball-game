@@ -199,12 +199,12 @@ Events.on(engine, "collisionActive", (e) => {
         if (pair.bodyA.tag == "dangerLine") {
             // 衝突開始時判定
             if (pair.bodyB.startTime == undefined) {
-                pair.bodyB.startTime = performance.now();
+                pair.bodyB.startTime = engine.timing.timestamp;
                 pair.bodyB.render.overlay = true;
             }
 
             // 色の濃さを設定
-            const percentage = (performance.now() - pair.bodyB.startTime) / 3000;
+            const percentage = (engine.timing.timestamp - pair.bodyB.startTime) / 3000;
             pair.bodyB.render.overlayOpacity = percentage;
 
             // 3秒後にゲームオーバー
