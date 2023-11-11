@@ -1,0 +1,17 @@
+{
+  "name": "ボールゲーム",
+  "background_color": "#C68E53",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "/img/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
