@@ -23,7 +23,7 @@ function saveData() {
 function loadData() {
     // データがあるかチェック
     if (localStorage.getItem("data") == undefined) {
-        return false;
+        return;
     }
 
     // データをロード
@@ -31,7 +31,7 @@ function loadData() {
 
     // データをロードするかチェック
     if (!confirm("前回のデータをロードしますか？")) {
-        return false;
+        return;
     }
 
     // ロードを反映
@@ -44,5 +44,5 @@ function loadData() {
         Body.setAngle(BallObject, ball.angle);
     });
 
-    return true;
+    return;
 }

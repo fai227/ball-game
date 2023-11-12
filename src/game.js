@@ -334,8 +334,11 @@ function setPlaceholder(x) {
 
 // スタート関数
 function start() {
-    // ゲームデータをロード可能ならネクストを出さない
-    if (!loadData()) {
+    // ゲームデータをロード
+    loadData();
+
+    // プレースホルダーがないときはネクスト生成
+    if (Placeholder.ball == undefined) {
         next();
     }
 
