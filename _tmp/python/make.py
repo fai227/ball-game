@@ -2,7 +2,7 @@ from PIL import Image
 import numpy as np
 import json
 
-fileName = "_python/shape.png"
+fileName = "_tmp/python/shape.png"
 size = 350
 
 image = np.array(Image.open(fileName))

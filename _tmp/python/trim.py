@@ -2,7 +2,7 @@ from PIL import Image
 import numpy as np
 import os
 
-directory_name = "_python/before_trim/"
+directory_name = "_tmp/python/before_trim/"
 
 for file in os.listdir(directory_name):
     img = Image.open(directory_name + file)

@@ -8,7 +8,7 @@ const fileNames = ["matter", "vertices", "rank", "effect", "game", "window", "lo
 // ファイル読込み
 let allScript = "";
 fileNames.forEach((fileName) => {
-    allScript += fs.readFileSync(`../src/${fileName}.js`, "utf-8");
+    allScript += fs.readFileSync(`../../src/${fileName}.js`, "utf-8");
 });
 
 // 難読化
@@ -18,4 +18,4 @@ const obfuscationResult = JavaScriptObfuscator.obfuscate(allScript, {
 });
 
 // 書き込み
-fs.writeFileSync("../script.js", obfuscationResult.getObfuscatedCode());
+fs.writeFileSync("../../script.js", obfuscationResult.getObfuscatedCode());
