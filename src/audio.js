@@ -7,6 +7,9 @@ BGM.loop = true;
 const BallSound = new Audio();
 BallSound.src = `./se/${Math.floor(Math.random() * 4)}.mp3`;
 
+const Fanfare = new Audio();
+Fanfare.src = `./se/fanfare.mp3`;
+
 let volume = Number(localStorage.getItem("volume")) + 0;
 
 function audioPressed() {
@@ -47,4 +50,12 @@ function playBallSound() {
     BallSound.pause();
     BallSound.currentTime = 0;
     BallSound.play();
+}
+
+function playFanfare() {
+    if (volume == 0) {
+        return;
+    }
+
+    Fanfare.play();
 }

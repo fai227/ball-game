@@ -389,3 +389,23 @@ footer {
         opacity: 0;
     }
 }
+
+@keyframes fall {
+    0% {
+        top: -10%;
+        opacity: 0%;
+    }
+
+    10% {
+        opacity: 100%;
+    }
+
+    90% {
+        opacity: 100%;
+    }
+
+    100% {
+        top: 110%;
+        opacity: 0%;
+    }
+}

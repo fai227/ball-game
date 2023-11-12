@@ -183,3 +183,35 @@ function shuffle(array) {
     return array;
 }
 // #endregion
+
+// #region 花火
+function generateConfetti() {
+    for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+            const Parent = document.getElementById("dialogWrapperDiv");
+
+            const Div = document.createElement("div");
+            Parent.appendChild(Div);
+            Div.style.position = "absolute";
+            Div.style.backgroundColor = "#" + Math.floor(Math.random() * 16777215).toString(16) + "aa";
+            Div.style.width = "10px"
+            Div.style.height = "20px"
+            Div.style.left = `${Math.random() * 100}%`;
+            Div.style.pointerEvents = "none";
+
+            let tmpRandom = (Math.random() + Math.random() + Math.random()) / 3 * (Math.random() > 0.5) ? 1 : -1;
+            Div.animate([
+                { transform: `translateX(0px) rotate(0deg)` },
+                { transform: `translateX(${200 * tmpRandom}px) rotate(${-45 * tmpRandom}deg)` },
+            ], {
+                duration: 1000 + 2000 * Math.random(),
+                easing: "ease-in-out",
+                iterations: Infinity,
+                direction: "alternate",
+            });
+
+            Div.style.animation = `fall ${2 + 2 * Math.random()}s linear infinite`;
+        }, 100 * i);
+    }
+}
+// #endregion

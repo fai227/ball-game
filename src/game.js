@@ -371,10 +371,11 @@ async function gameOver() {
 
     // ボールを消していく
     const Balls = engine.world.bodies.filter((e) => { return e.tag && e.tag > 0 });  // ボールでフィルター
-    Balls.sort((a, b) => { return a.position.y - b.position.y });  // Y座標でソート
+    Balls.sort((a, b) => { return b.position.y - a.position.y });  // Y座標でソート
     for (let i = 0; i < Balls.length; i++) {
         const ball = Balls[i];
         Composite.remove(engine.world, ball);
+        playBallSound();
         await sleep(100);
     }
 
@@ -384,6 +385,10 @@ async function gameOver() {
         document.getElementById("nameInputSpan").style.display = "none";
     }
     else {  // ランキング用のInputを表示
+        // ファンファーレ
+        playFanfare();
+        generateConfetti();
+
         // ユーザーネームのキャッシュがあればそれを反映
         let username = localStorage.getItem("username");
         if (username != undefined) {
