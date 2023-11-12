@@ -175,10 +175,16 @@ footer {
     -webkit-backdrop-filter: blur(3px);
 }
 
-#titleDiv img {
+#audioImg {
+    width: 15%;
+    z-index: 10;
+    margin-bottom: 10%;
+}
+
+#titleImg {
     width: 100%;
-    margin-top: 40%;
-    margin-bottom: 20%;
+    margin-top: 35%;
+    margin-bottom: 10%;
 }
 
 #howToPlayWrapperDiv {

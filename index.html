@@ -51,7 +51,8 @@
         <div id="gameDiv">
             <canvas id="canvas" width="1080" height="1980"></canvas>
             <div id="titleDiv">
-                <img src="./img/titleNameVersion.png">
+                <img id="titleImg" src="./img/titleNameVersion.png">
+                <img id="audioImg" src="./img/speaker/0.png" onclick="audioPressed();">
                 <button ontouchstart="" class="titleButton" onclick="startGameButtonPressed()">ゲームスタート</button>
                 <button ontouchstart="" class="titleButton" onclick="rankingButtonPressed()">ランキング</button>
                 <button ontouchstart="" class="titleButton" onclick="howToPlayButtonPressed()">あそびかた</button>
@@ -117,6 +118,7 @@
 <script src="./src/game.js"></script>
 <script src="./src/window.js"></script>
 <script src="./src/loader.js"></script>
+<script src="./src/audio.js"></script>
 
 <!--
 <script src="./script.js"></script>

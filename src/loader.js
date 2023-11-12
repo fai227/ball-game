@@ -1,6 +1,3 @@
-window.addEventListener("beforeunload", saveData);
-window.addEventListener("blur", saveData);
-
 function saveData() {
     const Balls = engine.world.bodies.filter((e) => { return e.tag && e.tag > 0 });  // ボールでフィルター
     const SaveData = {
@@ -13,6 +10,8 @@ function saveData() {
         SaveData.balls.push({
             x: ball.position.x,
             y: ball.position.y,
+            vx: ball.velocity.x,
+            vy: ball.velocity.y,
             angle: ball.angle,
             tag: ball.tag,
         });
@@ -29,7 +28,6 @@ function loadData() {
 
     // データをロード
     const LoadData = JSON.parse(localStorage.getItem("data"));
-    localStorage.removeItem("data");
 
     // データをロードするかチェック
     if (!confirm("前回のデータをロードしますか？")) {
@@ -41,7 +39,9 @@ function loadData() {
     GameData.next = LoadData.next;
     GameData.score = LoadData.score;
     LoadData.balls.forEach(ball => {
-        createBall(ball.x, ball.y, ball.tag, ball.angle);
+        const BallObject = createBall(ball.x, ball.y, ball.tag);
+        Body.setVelocity(BallObject, { x: ball.vx, y: ball.vy });
+        Body.setAngle(BallObject, ball.angle);
     });
 
     return true;

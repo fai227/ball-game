@@ -171,6 +171,9 @@ Events.on(engine, "collisionStart", (e) => {
         Composite.remove(engine.world, pair.bodyA);
         Composite.remove(engine.world, pair.bodyB);
 
+        // 音を鳴らす
+        playBallSound();
+
         // スコア反映
         GameData["score"] += BallScore[nextBall - 1];
 
@@ -297,7 +300,8 @@ function mousedown(e) {
 render.canvas.addEventListener("touchend", touchend);
 
 function touchend(e) {
-    placeBall(Placeholder.x);
+    const x = (e.changedTouches[0].clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
+    placeBall(x);
     e.preventDefault();
 }
 
@@ -334,6 +338,13 @@ function start() {
     if (!loadData()) {
         next();
     }
+
+    window.addEventListener("beforeunload", saveData);
+    window.addEventListener("blur", saveData);
+    setTimeout(() => {
+        localStorage.removeItem("data");
+    }, 1000);
+    startBgm();
 }
 
 // ゲーム終了関数
@@ -418,7 +429,7 @@ function okPressed() {
 }
 
 // ボール作成関数
-function createBall(x, y, ballNum, angle) {
+function createBall(x, y, ballNum) {
     let ball = undefined;
 
     // ボディ生成
@@ -475,14 +486,8 @@ function createBall(x, y, ballNum, angle) {
             break;
     }
 
-    // タグ設定
+    // 全体設定
     ball["tag"] = ballNum;
-
-    // 角度が設定される場合は設定
-    if (angle != undefined) {
-        Body.setAngle(ball, angle);
-    }
-
     Composite.add(engine.world, ball);
     return ball;
 }
