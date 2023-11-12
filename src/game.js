@@ -397,6 +397,9 @@ async function gameOver() {
     dialog.style.opacity = 0;
     dialog.style.display = "flex";
     dialog.style.animation = "fadeIn 1s forwards";
+
+    // 念のため削除
+    localStorage.removeItem("data");
 }
 
 // 次に進める関数

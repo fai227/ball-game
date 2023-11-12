@@ -85,6 +85,9 @@ async function postRanking(name, score, ball) {
         }
     }
 
+    // 念のため削除
+    localStorage.removeItem("data");
+
     // リロード
     setTimeout(() => window.location.reload(), 1000);
 }
