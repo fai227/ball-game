@@ -1,4 +1,9 @@
 function saveData() {
+    // 最大ボールが野球以下の場合は飛ばす
+    if (GameData.ball <= 7) {
+        return;
+    }
+
     const Balls = engine.world.bodies.filter((e) => { return e.tag && e.tag > 0 });  // ボールでフィルター
     const SaveData = {
         balls: [],
