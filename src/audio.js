@@ -23,8 +23,8 @@ function audioPressed() {
 
 function setImgSrc() {
     AudioImg.src = `./img/speaker/${volume}.png`;
-    BGM.volume = volume / 3;
-    BallSound.volume = volume / 3;
+    BGM.volume = (volume / 3) * (volume / 3);
+    BallSound.volume = (volume / 3) * (volume / 3);
     localStorage.setItem("volume", volume);
 }
 setImgSrc();
