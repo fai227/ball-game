@@ -8,11 +8,13 @@ const fileNames = ["matter", "vertices", "rank", "effect", "game", "window", "lo
 // ファイル読込み
 let allScript = "";
 fileNames.forEach((fileName) => {
-    allScript += fs.readFileSync(`../../src/${fileName}.js`, "utf-8");
+    allScript += fs.readFileSync(`../../_src/${fileName}.js`, "utf-8");
 });
 
 // 難読化
 const obfuscationResult = JavaScriptObfuscator.obfuscate(allScript, {
+    debugProtection: false,  // あとでTrue
+    renameGlobals: true,
     stringArray: true,
     transformObjectKeys: true,
 });
