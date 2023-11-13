@@ -1,6 +1,15 @@
-const rankingURL = "https://data-center.azurewebsites.net/ball-game/ranking";
+const https = "https";
+const dataCenter = "data-center";
+const azurewebsites = "azurewebsites";
+const net = "net";
+const ballGame = "ball-game";
+const ranking = "ranking";
 const rankingTable = document.getElementById("rankingTable");
 let lowestScore = 0;
+
+function getUrl() {
+    return https + "://" + dataCenter + "." + azurewebsites + "." + net + "/" + ballGame + "/" + ranking;
+}
 
 function setRanking(rankingData) {
     // 子をすべて削除
@@ -53,7 +62,7 @@ async function postRanking(name, score, ball) {
     while (true) {
         try {
             const result = await fetch(
-                rankingURL,
+                getUrl(),
                 {
                     method: "POST",
                     headers: {
@@ -93,7 +102,7 @@ async function postRanking(name, score, ball) {
 }
 
 async function getRanking() {
-    const result = await fetch(rankingURL);
+    const result = await fetch(getUrl());
     const data = await result.json();
 
     if (data["week"].length == 10) {

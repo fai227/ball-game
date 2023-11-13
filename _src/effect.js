@@ -111,6 +111,9 @@ function setSlot(ballId) {
 // #endregion
 
 // #region ボール辞典
+document.getElementById("previousDictionary").addEventListener("click", setPreviousDictionary);
+document.getElementById("nextDictionary").addEventListener("click", setNextDictionary);
+
 // ボール辞典
 const BallName = ["ビーだま", "スーパーボール", "ピンポンだま", "ゴルフボール", "ビリヤードだま", "テニスボール", "やきゅうボール", "ラグビーボール", "バレーボール", "サッカーボール", "バスケットボール", "???"];
 let dictionaryIndex = 1;

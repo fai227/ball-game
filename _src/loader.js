@@ -1,6 +1,6 @@
 function saveData() {
     // 最大ボールが野球以下の場合は保存しない
-    if (GameData.ball <= 7) {
+    if (GameDataBall <= 7) {
         return;
     }
 
@@ -8,8 +8,8 @@ function saveData() {
     const SaveData = {
         balls: [],
         placeholder: Placeholder.ball,
-        next: GameData.next,
-        score: GameData.score,
+        next: GameDataNext,
+        score: GameDataScore,
     };
     Balls.forEach(ball => {
         SaveData.balls.push({
@@ -41,8 +41,8 @@ function loadData() {
 
     // ロードを反映
     Placeholder.ball = LoadData.placeholder;
-    GameData.next = LoadData.next;
-    GameData.score = LoadData.score;
+    GameDataNext = LoadData.next;
+    GameDataScore = LoadData.score;
     LoadData.balls.forEach(ball => {
         const BallObject = createBall(ball.x, ball.y, ball.tag);
         Body.setVelocity(BallObject, { x: ball.vx, y: ball.vy });

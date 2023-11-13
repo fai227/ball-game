@@ -16,6 +16,7 @@ const obfuscationResult = JavaScriptObfuscator.obfuscate(allScript, {
     debugProtection: false,  // あとでTrue
     renameGlobals: true,
     stringArray: true,
+    stringArrayWrappersCount: 3,
     transformObjectKeys: true,
 });
 
