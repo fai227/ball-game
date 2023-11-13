@@ -308,7 +308,7 @@ footer {
 
 #returnToHomeButton {
     padding: 2rem;
-    margin: auto;
+    margin: 0.5rem auto 2rem auto;
 }
 
 .simpleText {

@@ -48,6 +48,4 @@ function loadData() {
         Body.setVelocity(BallObject, { x: ball.vx, y: ball.vy });
         Body.setAngle(BallObject, ball.angle);
     });
-
-    return;
 }
