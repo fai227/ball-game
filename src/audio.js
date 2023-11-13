@@ -1,14 +1,10 @@
 const AudioImg = document.getElementById("audioImg");
 
-const BGM = new Audio();
-BGM.src = `./bgm/${Math.floor(Math.random() * 3) + 1}.mp3`;
+const BGM = new Audio(`./bgm/${Math.floor(Math.random() * 3) + 1}.mp3`);
 BGM.loop = true;
 
-const BallSound = new Audio();
-BallSound.src = `./se/${Math.floor(Math.random() * 4)}.mp3`;  // 2の可能性が高い
-
-const Fanfare = new Audio();
-Fanfare.src = `./se/fanfare.mp3`;
+const BallSound = new Audio(`./se/2.mp3`);
+const Fanfare = new Audio(`./se/fanfare.mp3`);
 
 let volume = Number(localStorage.getItem("volume")) + 0;
 
