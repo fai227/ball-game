@@ -108,7 +108,9 @@ function setSlot(ballId) {
         previousBallId = ballId;
     }, 500);
 }
+// #endregion
 
+// #region ボール辞典
 // ボール辞典
 const BallName = ["ビーだま", "スーパーボール", "ピンポンだま", "ゴルフボール", "ビリヤードだま", "テニスボール", "やきゅうボール", "ラグビーボール", "バレーボール", "サッカーボール", "バスケットボール", "???"];
 let dictionaryIndex = 1;
@@ -130,7 +132,7 @@ function setDictionary() {
     // ハテナ表示
     if (dictionaryIndex == BallName.length) {
         document.getElementById("dictionaryId").textContent = `No. ??`;
-        document.getElementById("dictionaryImg").src = `./img/balls/15.png`;
+        document.getElementById("dictionaryImg").src = `./img/balls/hatena.png`;
         document.getElementById("dictionaryH2").textContent = BallName[dictionaryIndex - 1];
     }
     else {
@@ -140,7 +142,6 @@ function setDictionary() {
     }
 }
 setDictionary();
-
 // #endregion
 
 // #region バナー
