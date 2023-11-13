@@ -306,6 +306,11 @@ footer {
     float: right;
 }
 
+#returnToHomeButton {
+    padding: 2rem;
+    margin: auto;
+}
+
 .simpleText {
     font-family: "HeaderFont";
     color: white;

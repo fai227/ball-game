@@ -38,7 +38,7 @@ function setRanking(rankingData) {
     }
 
     // ランキング反映
-    for (let rankNum = 0; rankNum < rankingData["total"].length; rankNum++) {
+    for (let rankNum = 0; rankNum < 10; rankNum++) {
         const rankRow = document.createElement("tr");
         rankingTable.append(rankRow)
         const weekData = getRankDivs(rankNum + 1, rankingData["week"][rankNum]);

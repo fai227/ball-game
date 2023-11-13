@@ -145,11 +145,13 @@ setDictionary();
 
 // #region バナー
 const AdTexts = shuffle([
-    "鋭意開発中‼",
+    "鋭意開発中！",
     "ブックマークしてね",
-    "共有ボタンからホームに追加してね",
-    "スーパーボールとピンポン玉は結構跳ねるよ",
+    "共有ボタンからホームに追加するとアプリのように使えるよ",
+    "スーパーボールとピンポンだまは結構跳ねるよ",
     "ビリヤード玉は割と重いよ",
+    "まずはバスケットボールを作ろう！",
+    "慣れてきたら、バスケットボールを２こ作れるかな...？",
 ]);
 const Banner = document.getElementById("banner");
 const BannerContent = document.getElementById("bannerContent");
@@ -157,8 +159,14 @@ let adIndex = -1;
 function showNextBanner() {
     adIndex = (adIndex + 1) % AdTexts.length;
     BannerContent.textContent = AdTexts[adIndex];
-    Banner.style.animation = "";
-    Banner.style.animation = "animateBanner 30s linear infinite";
+    Banner.animate([
+        { transform: "translateX(100%)" },
+        { transform: "translateX(-100%)" },
+    ], {
+        duration: 30 * 1000,
+        easing: "linear",
+        fill: "forwards",
+    });
     setTimeout(showNextBanner, 30 * 1000);
 }
 

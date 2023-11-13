@@ -1,5 +1,5 @@
 function saveData() {
-    // 最大ボールが野球以下の場合は飛ばす
+    // 最大ボールが野球以下の場合は保存しない
     if (GameData.ball <= 7) {
         return;
     }
