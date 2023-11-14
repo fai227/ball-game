@@ -111,6 +111,9 @@ function setSlot(ballId) {
 // #endregion
 
 // #region ボール辞典
+document.getElementById("previousDictionary").addEventListener("click", setPreviousDictionary);
+document.getElementById("nextDictionary").addEventListener("click", setNextDictionary);
+
 // ボール辞典
 const BallName = ["ビーだま", "スーパーボール", "ピンポンだま", "ゴルフボール", "ビリヤードだま", "テニスボール", "やきゅうボール", "ラグビーボール", "バレーボール", "サッカーボール", "バスケットボール", "???"];
 let dictionaryIndex = 1;
@@ -149,12 +152,31 @@ const AdTexts = shuffle([
     "鋭意開発中！",
     "11/19（日）に公開予定☺",
     "ブックマークしてね",
+    "どんどん友達にシェアしてね",
     "共有ボタンからホームに追加するとアプリのように使えるよ",
     "スーパーボールとピンポンだまは結構跳ねるよ",
-    "ビリヤード玉は割と重いよ",
+    "ビリヤードだまは割と重いよ",
     "まずはバスケットボールを作ろう！",
     "慣れてきたら、バスケットボールを２こ作れるかな...？",
 ]);
+const DevelopTips = [
+    "初めての物理演算、実装結構大変やったよ",
+    "MatterJSというライブラリを使っています",
+    "ラグビーボール型の形を作るのがちょっと大変やったよ",
+    "パソコンで開くと、効果音もなるよ",
+    "",
+];
+const IllustTips = [
+    "ビーだまは一番小さいけど、実は一番使っている色の数が多い！",
+    "スーパーボールは「らしさ」を出すのに苦労…白いマーブルが良く映えるね",
+    "ピンポンだまの目の星は高級さを表す指標のアレ。大会とかでは3つ星を使うらしい。",
+
+    "テニスボールはボールゲームの顔であり一番最初に描かれたボール！じつは縁取りがほんの少しもこもこしております",
+    "初期では、やきゅうボールは縫い目を傷に見立てた隻眼となってたぞ！グッドデザイン賞受賞！",
+    "バレーボールは模様と顔がどっちも映えるような色使い！顔は少女漫画のマスコット的なかわいさに！",
+    "サッカーボール、実は真っ黒じゃなくて少し青色がかった色を使っているぞ！",
+    "バスケットボールは「モッ」とした口がミソ。ゲーム中に見る機会が少ないのがかなしいね",
+];
 const Banner = document.getElementById("banner");
 const BannerContent = document.getElementById("bannerContent");
 let adIndex = -1;

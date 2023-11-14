@@ -42,7 +42,7 @@
 </head>
 
 <body>
-    <div id="wrappingDiv" onclick="(e) => e.preventDefault()">
+    <div id="wrappingDiv">
         <header>
             <div id="banner">
                 <p id="bannerContent"></p>
@@ -52,10 +52,10 @@
             <canvas id="canvas" width="1080" height="1980"></canvas>
             <div id="titleDiv">
                 <img id="titleImg" src="./img/titleNameVersion.png">
-                <img id="audioImg" src="./img/speaker/0.png" onclick="audioPressed();">
-                <button ontouchstart="" class="titleButton" onclick="startGameButtonPressed()">ゲームスタート</button>
-                <button ontouchstart="" class="titleButton" onclick="rankingButtonPressed()">ランキング</button>
-                <button ontouchstart="" class="titleButton" onclick="howToPlayButtonPressed()">あそびかた</button>
+                <img id="audioImg" src="./img/speaker/0.png">
+                <button id="startGameButton" class="titleButton">ゲームスタート</button>
+                <button id="rankingButton" class="titleButton">ランキング</button>
+                <button id="howToPlayButton" class="titleButton">あそびかた</button>
             </div>
         </div>
         <hr>
@@ -79,37 +79,11 @@
                 <img src="./img/balls/1.png" id="dictionaryImg">
                 <h2 class="simpleText" id="dictionaryH2">ビーだま</h2>
                 <hr>
-                <button class="nextButton" onclick="setPreviousDictionary()">&lt;</button>
-                <button class="nextButton" onclick="setNextDictionary()">&gt;</button>
+                <button class="nextButton" id="previousDictionary">&lt;</button>
+                <button class="nextButton" id="nextDictionary">&gt;</button>
             </div>
         </div>
         <hr>
-        <!--
-        <div id="settingDiv">
-            <h1 class="simpleText">せってい</h1>
-            <table>
-                <tr>
-                    <th style="font-size: x-large; height: 8rem;">
-                        おんりょう
-                    </th>
-                    <th style="vertical-align: middle;">
-                        <img id="audioImg" src="./img/speaker/0.png" onclick="audioPressed();">
-                    </th>
-                </tr>
-                <tr>
-                    <td style="font-size: x-large;  height: 8rem;">
-                        BGM
-                    </td>
-                    <td>
-                        <button style="display: inline-block;">&lt;</button>
-                        <h2 style="width: 50%; display: inline-block;">1</h2>
-                        <button style="display: inline-block;">&gt;</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <hr>
-        -->
         <button id="returnToHomeButton" onclick="location.href='https://fai227.github.io/Home/'">ホームにもどる</button>
         <footer>
             <div id="repositoryDiv"><a target=”_blank” href="https://github.com/fai227/ball-game">プログラム</a>：ファイ</div>
@@ -128,7 +102,7 @@
                 </p>
                 <input type="text" placeholder="ニックネーム" id="usernameInput" maxlength="8">
             </span>
-            <button onclick="okPressed()">OK</button>
+            <button id="dialogOkButton">OK</button>
         </div>
 
     </div>
@@ -139,18 +113,6 @@
     </div>
 </body>
 
-
-<script src="./src/matter.js"></script>
-<script src="./src/vertices.js"></script>
-<script src="./src/rank.js"></script>
-<script src="./src/effect.js"></script>
-<script src="./src/game.js"></script>
-<script src="./src/window.js"></script>
-<script src="./src/loader.js"></script>
-<script src="./src/audio.js"></script>
-
-<!--
 <script src="./script.js"></script>
--->
 
 </html>

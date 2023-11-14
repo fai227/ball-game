@@ -9,13 +9,22 @@ const Bodies = Matter.Bodies;
 const Composite = Matter.Composite;
 const Events = Matter.Events;
 
+const StartGameButton = document.getElementById("startGameButton");
+StartGameButton.onclick = startGameButtonPressed;
+const RankingButton = document.getElementById("rankingButton");
+RankingButton.onclick = rankingButtonPressed;
+const HowToPlayButton = document.getElementById("howToPlayButton");
+HowToPlayButton.onclick = howToPlayButtonPressed;
+
 // 定数設定
 const bubbleImage = new Image(); bubbleImage.src = "./img/bubble.png";
 const CraneImage = new Image(); CraneImage.src = "./img/crane.png";
 const OpenCraneImage = new Image(); OpenCraneImage.src = "./img/openCrane.png";
 const BallSize = [65, 90, 130, 150, 190, 240, 285, 350, 390, 490, 590, 65, 90, 130, 150];
 const BallScore = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120];
-const GameData = { "score": 0, "ball": 1, "next": 1 };
+let GameDataScore = 0;
+let GameDataBall = 1;
+let GameDataNext = 1;
 const Placeholder = { x: 540, ball: undefined };
 
 // 環境設定
@@ -124,15 +133,15 @@ Events.on(render, "afterRender", () => {
     context.drawImage(bubbleImage, 100, 50, 300, 300);
     context.fillText("スコア", 250, 80);
     context.strokeText("スコア", 250, 80);
-    context.fillText(GameData["score"], 250, 230, 250);
-    context.strokeText(GameData["score"], 250, 230, 250);
+    context.fillText(GameDataScore, 250, 230, 250);
+    context.strokeText(GameDataScore, 250, 230, 250);
 
     // ネクスト表示
     context.drawImage(bubbleImage, 680, 50, 300, 300);
     context.fillText("ネクスト", 830, 80);
     context.strokeText("ネクスト", 830, 80);
-    const nextBallWidth = BallSize[GameData["next"] - 1];
-    context.drawImage(BallImages[GameData["next"] - 1], 830 - nextBallWidth / 2, 205 - nextBallWidth / 2, nextBallWidth, nextBallWidth);
+    const nextBallWidth = BallSize[GameDataNext - 1];
+    context.drawImage(BallImages[GameDataNext - 1], 830 - nextBallWidth / 2, 205 - nextBallWidth / 2, nextBallWidth, nextBallWidth);
 
     // プレースホルダーを表示
     if (Placeholder.ball != undefined) {
@@ -175,7 +184,7 @@ Events.on(engine, "collisionStart", (e) => {
         playBallSound();
 
         // スコア反映
-        GameData["score"] += BallScore[nextBall - 1];
+        GameDataScore += BallScore[nextBall - 1];
 
         // 次のボールがある場合は作成
         if (nextBall <= 15) {
@@ -183,8 +192,8 @@ Events.on(engine, "collisionStart", (e) => {
             createBall(averageX, averageY, nextBall);
 
             // 最大ボール反映
-            if (GameData["ball"] < nextBall) {
-                GameData["ball"] = nextBall;
+            if (GameDataBall < nextBall) {
+                GameDataBall = nextBall;
                 setSlot(nextBall);
             }
         }
@@ -380,8 +389,8 @@ async function gameOver() {
     }
 
     // ランキングチェック
-    document.getElementById("scoreSpan").textContent = GameData["score"];
-    if (GameData["score"] <= lowestScore) {  // ランキング用のInputを非表示
+    document.getElementById("scoreSpan").textContent = GameDataScore;
+    if (GameDataScore <= lowestScore) {  // ランキング用のInputを非表示
         document.getElementById("nameInputSpan").style.display = "none";
     }
     else {  // ランキング用のInputを表示
@@ -409,14 +418,15 @@ async function gameOver() {
 
 // 次に進める関数
 function next() {
-    Placeholder.ball = GameData["next"];
-    GameData["next"] = Math.floor(Math.random() * 5) + 1;
+    Placeholder.ball = GameDataNext;
+    GameDataNext = Math.floor(Math.random() * 5) + 1;
 }
 
+document.getElementById("dialogOkButton").onclick = okPressed;
 // ランキング反映用のOKボタンが押されたとき
 function okPressed() {
     // ランキング反映が必要ないときはそのままリロード
-    if (GameData["score"] <= lowestScore) {
+    if (GameDataScore <= lowestScore) {
         document.body.style.animation = "fadeOut 1s forwards";
         setTimeout(() => window.location.reload(), 1000);
         return;
@@ -435,7 +445,7 @@ function okPressed() {
     localStorage.setItem("username", username);
 
     // プッシュ
-    postRanking(username, GameData["score"], GameData["ball"]);
+    postRanking(username, GameDataScore, GameDataBall);
     document.body.style.animation = "fadeOut 1s forwards";
 }
 
