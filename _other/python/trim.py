@@ -7,6 +7,7 @@ directory_name = "_other/python/before_trim/"
 for file in os.listdir(directory_name):
     img = Image.open(directory_name + file)
 
+    # 画像のトリミング
     _, _, _, alpha_list = img.split() 
     numpy_alpha_list = np.array(alpha_list)
 
@@ -35,4 +36,9 @@ for file in os.listdir(directory_name):
                 break
 
     img = img.crop((left, upper, right, lower))
-    img.save("_python/after_trim/" + file)
+
+    # 画像のリサイズ
+    img = img.resize((500, 500), Image.BILINEAR)
+
+    # 画像のトリミング
+    img.save("_other/python/after_trim/" + file)
