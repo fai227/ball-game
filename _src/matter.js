@@ -5389,11 +5389,13 @@
                         isConvex = Vertices.isConvex(vertices);
                         isConcave = !isConvex;
 
+                        /**
                         if (isConcave && !canDecomp) {
                             Common.warnOnce(
                                 'Bodies.fromVertices: Install the \'poly-decomp\' library and use Common.setDecomp or provide \'decomp\' as a global to decompose concave vertices.'
                             );
                         }
+                        */
 
                         if (isConvex || !canDecomp) {
                             if (isConvex) {
