@@ -50,7 +50,7 @@ function setSlot(ballId) {
             });
 
             slot.animate([
-                { transform: `translate(-50%, -50%) rotate(${(ballId - 8) * 90}deg)` },
+                { transform: `translate(-50%, -50%) rotate(${(ballId - 8) * 90 + 30}deg)` },
             ], {
                 fill: "forwards",
                 duration: 1000,
@@ -88,7 +88,7 @@ function setSlot(ballId) {
         else {
             // 0.5秒で回転
             slot.animate([
-                { transform: `translate(-50%, -50%) rotate(${(ballId - 8) * 90}deg)` },
+                { transform: `translate(-50%, -50%) rotate(${(ballId - 8) * 90 + 30}deg)` },
             ], {
                 fill: "forwards",
                 duration: 500,
@@ -151,21 +151,28 @@ setDictionary();
 const AdTexts = shuffle([
     "鋭意開発中！",
     "11/19（日）に公開予定☺",
+
+    "ランキングで1位を目指そう！",
     "ブックマークしてね",
     "どんどん友達にシェアしてね",
     "共有ボタンからホームに追加するとアプリのように使えるよ",
+
     "スーパーボールとピンポンだまは結構跳ねるよ",
     "ビリヤードだまは割と重いよ",
     "まずはバスケットボールを作ろう！",
     "慣れてきたら、バスケットボールを２こ作れるかな...？",
 ]);
-const DevelopTips = [
+
+const DevelopTips = shuffle([
     "初めての物理演算、実装結構大変やったよ",
     "MatterJSというライブラリを使っています",
-    "ラグビーボール型の形を作るのがちょっと大変やったよ",
-    "パソコンで開くと、効果音もなるよ",
-    "",
-];
+    "ラグビーボール型の形を作るのがちょっと大変だったよ",
+    "パソコンで開くと、効果音がなるよ",
+    "BGMは3種類あるよ",
+    "構想から開発完成まで大体1ヶ月～",
+    "他の作品も遊んでみてね～！詳しくはサイト一番下のボタンからホームに戻ってね！",
+]);
+
 const IllustTips = [
     "ビーだまは一番小さいけど、実は一番使っている色の数が多い！",
     "スーパーボールは「らしさ」を出すのに苦労…白いマーブルが良く映えるね",
@@ -177,12 +184,33 @@ const IllustTips = [
     "サッカーボール、実は真っ黒じゃなくて少し青色がかった色を使っているぞ！",
     "バスケットボールは「モッ」とした口がミソ。ゲーム中に見る機会が少ないのがかなしいね",
 ];
+
 const Banner = document.getElementById("banner");
 const BannerContent = document.getElementById("bannerContent");
 let adIndex = -1;
+let developIndex = -1;
+let illustIndex = -1;
 function showNextBanner() {
-    adIndex = (adIndex + 1) % AdTexts.length;
-    BannerContent.textContent = AdTexts[adIndex];
+    // バナーの内容を変更
+    const randNum = Math.random();
+
+    // 50%の確率で広告を表示
+    if (randNum < 0.5) {
+        adIndex = (adIndex + 1) % AdTexts.length;
+        BannerContent.textContent = AdTexts[adIndex];
+    }
+    // 25%の確率で開発秘話を表示
+    else if (randNum < 0.75) {
+        developIndex = (developIndex + 1) % DevelopTips.length;
+        BannerContent.textContent = DevelopTips[developIndex];
+    }
+    // 25%の確率でイラストの秘話を表示
+    else {
+        illustIndex = (illustIndex + 1) % IllustTips.length;
+        BannerContent.textContent = IllustTips[illustIndex];
+    }
+
+    // バナーを右から左に移動
     Banner.animate([
         { transform: "translateX(100%)" },
         { transform: "translateX(-100%)" },
@@ -191,6 +219,8 @@ function showNextBanner() {
         easing: "linear",
         fill: "forwards",
     });
+
+    // アニメーション終了後に再度実行
     setTimeout(showNextBanner, 30 * 1000);
 }
 

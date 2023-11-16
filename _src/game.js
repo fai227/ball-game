@@ -20,7 +20,7 @@ HowToPlayButton.onclick = howToPlayButtonPressed;
 const bubbleImage = new Image(); bubbleImage.src = "./img/bubble.png";
 const CraneImage = new Image(); CraneImage.src = "./img/crane.png";
 const OpenCraneImage = new Image(); OpenCraneImage.src = "./img/openCrane.png";
-const BallSize = [65, 90, 130, 150, 190, 240, 285, 350, 390, 490, 590, 65, 90, 130, 150];
+const BallSize = [65, 90, 130, 150, 190, 240, 285, 350, 390, 490, 590, 90, 150, 240, 350];
 const BallScore = [0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120];
 let GameDataScore = 0;
 let GameDataBall = 1;
@@ -454,28 +454,41 @@ function createBall(x, y, ballNum) {
     let ball = undefined;
 
     // ボディ生成
-    // ラグビーボール以外
-    if (ballNum != 8) {
-        ball = Bodies.circle(x, y, BallSize[ballNum - 1] / 2, {
-            render: {
-                sprite: {
-                    texture: `./img/balls/${ballNum}.png`,
-                    overlayTexture: "./img/balls/overlay.png",
-                    xScale: BallSize[ballNum - 1] / 1000,
-                    yScale: BallSize[ballNum - 1] / 1000,
-                },
-            },
-        });
-    }
-    // ラグビーボール
-    else {
+    // アメフトボール
+    if (ballNum == 8) {
         ball = Bodies.fromVertices(x, y, eightVertices, {
             render: {
                 sprite: {
                     texture: `./img/balls/${ballNum}.png`,
                     overlayTexture: "./img/balls/overlay8.png",
-                    xScale: BallSize[ballNum - 1] / 1000,
-                    yScale: BallSize[ballNum - 1] / 1000,
+                    xScale: BallSize[ballNum - 1] / 500,
+                    yScale: BallSize[ballNum - 1] / 500,
+                },
+            },
+        });
+    }
+    // ラグビーボール
+    else if (ballNum == 14) {
+        ball = Bodies.fromVertices(x, y, forteenVertices, {
+            render: {
+                sprite: {
+                    texture: `./img/balls/${ballNum}.png`,
+                    overlayTexture: "./img/balls/overlay8.png",
+                    xScale: BallSize[ballNum - 1] / 500,
+                    yScale: BallSize[ballNum - 1] / 500,
+                },
+            },
+        });
+    }
+    // ラグビーボール以外
+    else {
+        ball = Bodies.circle(x, y, BallSize[ballNum - 1] / 2, {
+            render: {
+                sprite: {
+                    texture: `./img/balls/${ballNum}.png`,
+                    overlayTexture: "./img/balls/overlay.png",
+                    xScale: BallSize[ballNum - 1] / 500,
+                    yScale: BallSize[ballNum - 1] / 500,
                 },
             },
         });
