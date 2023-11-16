@@ -115,7 +115,7 @@ document.getElementById("previousDictionary").addEventListener("click", setPrevi
 document.getElementById("nextDictionary").addEventListener("click", setNextDictionary);
 
 // ボール辞典
-const BallName = ["ビーだま", "スーパーボール", "ピンポンだま", "ゴルフボール", "ビリヤードだま", "テニスボール", "やきゅうボール", "ラグビーボール", "バレーボール", "サッカーボール", "バスケットボール", "???"];
+const BallName = ["ビーだま", "スーパーボール", "ピンポンだま", "ゴルフボール", "ビリヤードだま", "テニスボール", "やきゅうボール", "アメフトボール", "バレーボール", "サッカーボール", "バスケットボール", "???"];
 let dictionaryIndex = 1;
 function setNextDictionary() {
     dictionaryIndex++;
@@ -173,17 +173,20 @@ const DevelopTips = shuffle([
     "他の作品も遊んでみてね～！詳しくはサイト一番下のボタンからホームに戻ってね！",
 ]);
 
-const IllustTips = [
+const IllustTips = shuffle([
     "ビーだまは一番小さいけど、実は一番使っている色の数が多い！",
     "スーパーボールは「らしさ」を出すのに苦労…白いマーブルが良く映えるね",
     "ピンポンだまの目の星は高級さを表す指標のアレ。大会とかでは3つ星を使うらしい。",
-
+    "ピンポン玉、肥えろ跳ねるな",
+    "ゴルフボールはおヒゲがチャーミング！デコボコの影も合わさって最強に見える",
+    "8ボールはデザインに超四苦八苦…。結果的には無機質なお顔が超GOOD！",
     "テニスボールはボールゲームの顔であり一番最初に描かれたボール！じつは縁取りがほんの少しもこもこしております",
     "初期では、やきゅうボールは縫い目を傷に見立てた隻眼となってたぞ！グッドデザイン賞受賞！",
+    "アメフトボールは縫い目が口に…！？何か頬張っているような表情がとても好きです",
     "バレーボールは模様と顔がどっちも映えるような色使い！顔は少女漫画のマスコット的なかわいさに！",
     "サッカーボール、実は真っ黒じゃなくて少し青色がかった色を使っているぞ！",
     "バスケットボールは「モッ」とした口がミソ。ゲーム中に見る機会が少ないのがかなしいね",
-];
+]);
 
 const Banner = document.getElementById("banner");
 const BannerContent = document.getElementById("bannerContent");
@@ -194,21 +197,23 @@ function showNextBanner() {
     // バナーの内容を変更
     const randNum = Math.random();
 
-    // 50%の確率で広告を表示
-    if (randNum < 0.5) {
+    // 60%の確率で広告を表示
+    if (randNum < 0.6) {
         adIndex = (adIndex + 1) % AdTexts.length;
         BannerContent.textContent = AdTexts[adIndex];
     }
-    // 25%の確率で開発秘話を表示
-    else if (randNum < 0.75) {
+    // 20%の確率で開発秘話を表示
+    else if (randNum < 0.8) {
         developIndex = (developIndex + 1) % DevelopTips.length;
         BannerContent.textContent = DevelopTips[developIndex];
     }
-    // 25%の確率でイラストの秘話を表示
+    // 20%の確率でイラストの秘話を表示
     else {
         illustIndex = (illustIndex + 1) % IllustTips.length;
         BannerContent.textContent = IllustTips[illustIndex];
     }
+
+
 
     // バナーを右から左に移動
     Banner.animate([

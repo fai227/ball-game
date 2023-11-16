@@ -1,6 +1,8 @@
+const ScoreText = "score";
+
 function saveData() {
-    // 最大ボールが野球以下の場合は保存しない
-    if (GameDataBall <= 7) {
+    // 最大ボールがビリヤードだま以下の場合は保存しない
+    if (GameDataBall <= 5) {
         return;
     }
 
@@ -9,8 +11,9 @@ function saveData() {
         balls: [],
         placeholder: Placeholder.ball,
         next: GameDataNext,
-        score: GameDataScore,
     };
+    SaveData[ScoreText] = GameDataScore;
+
     Balls.forEach(ball => {
         SaveData.balls.push({
             x: ball.position.x,
@@ -42,7 +45,7 @@ function loadData() {
     // ロードを反映
     Placeholder.ball = LoadData.placeholder;
     GameDataNext = LoadData.next;
-    GameDataScore = LoadData.score;
+    GameDataScore = LoadData[ScoreText];
     LoadData.balls.forEach(ball => {
         const BallObject = createBall(ball.x, ball.y, ball.tag);
         Body.setVelocity(BallObject, { x: ball.vx, y: ball.vy });

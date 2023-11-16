@@ -144,6 +144,7 @@ footer {
     margin: 0;
     padding: 0;
 
+    display: inline-block;
     white-space: nowrap;
     animation-fill-mode: forwards;
 }
@@ -352,6 +353,12 @@ footer {
     vertical-align: middle;
 }
 
+.howToImg {
+    width: 60%;
+    margin: 0.5rem auto 1rem auto;
+    border: 0.25rem solid #F0AE4E;
+}
+
 .rankingBallImg {
     height: 2rem;
 }
@@ -363,16 +370,6 @@ footer {
     padding: 1rem;
     margin: 0rem 0.5rem;
     width: 40%;
-}
-
-@keyframes animateBanner {
-    0% {
-        transform: translateX(100%);
-    }
-
-    100% {
-        transform: translateX(-100%);
-    }
 }
 
 @keyframes fadeIn {

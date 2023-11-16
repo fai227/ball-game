@@ -467,7 +467,7 @@ function createBall(x, y, ballNum) {
             },
         });
     }
-    // ラグビーボール
+    // アメフトボール
     else if (ballNum == 14) {
         ball = Bodies.fromVertices(x, y, forteenVertices, {
             render: {
@@ -480,7 +480,7 @@ function createBall(x, y, ballNum) {
             },
         });
     }
-    // ラグビーボール以外
+    // アメフトボール以外
     else {
         ball = Bodies.circle(x, y, BallSize[ballNum - 1] / 2, {
             render: {
@@ -498,6 +498,11 @@ function createBall(x, y, ballNum) {
     switch (ballNum) {
         // スーパーボール
         case 2:
+            ball.restitution = 0.8;
+            break;
+
+        // 鬼スーパーボール
+        case 12:
             ball.restitution = 0.8;
             break;
 
