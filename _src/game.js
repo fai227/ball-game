@@ -378,6 +378,22 @@ async function gameOver() {
     // シミュレーションストップ
     Runner.stop(runner);
 
+    // 画像を取得
+    try {
+        const image = render.canvas.toDataURL("image/png");
+
+        const resultImgElement = new Image();
+        resultImgElement.src = image;
+        resultImgElement.classList.add("resultImg");
+
+        const resultImg = document.getElementById("resultImg");
+        resultImg.appendChild(resultImgElement);
+    }
+    // 画像取得に失敗したときはログだけ表示
+    catch (e) {
+        console.log(e);
+    }
+
     // ボールを消していく
     const Balls = engine.world.bodies.filter((e) => { return e.tag && e.tag > 0 });  // ボールでフィルター
     Balls.sort((a, b) => { return b.position.y - a.position.y });  // Y座標でソート
@@ -388,14 +404,20 @@ async function gameOver() {
         await sleep(100);
     }
 
+    // 最後に0.5秒待つ
+    await sleep(500);
+
     // ランキングチェック
     document.getElementById("scoreSpan").textContent = GameDataScore;
     if (GameDataScore <= lowestScore) {  // ランキング用のInputを非表示
         document.getElementById("nameInputSpan").style.display = "none";
+
+        // ゲームオーバーサウンド
+        playGameOverSound();
     }
     else {  // ランキング用のInputを表示
         // ファンファーレ
-        playFanfare();
+        playFanfareSound();
         generateConfetti();
 
         // ユーザーネームのキャッシュがあればそれを反映

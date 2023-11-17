@@ -237,11 +237,14 @@ footer {
 
 #dialogDiv {
     width: min(80vw, 50vh);
+    max-height: 80Vh;
+    overflow-y: auto;
+
     margin: auto;
 
-    border-color: #D9A560;
+    border-color: #7a5e39;
     border-width: 1rem;
-    border-radius: 5rem;
+    border-radius: 1rem;
     border-style: solid;
     background: #FFF7D3;
 
@@ -370,6 +373,14 @@ footer {
     padding: 1rem;
     margin: 0rem 0.5rem;
     width: 40%;
+}
+
+.resultImg {
+    height: min(40vh, 70vw);
+    background-image: url(img/background.png);
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #7a560c;
 }
 
 @keyframes fadeIn {

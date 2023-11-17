@@ -4,8 +4,10 @@ AudioImg.addEventListener("click", audioPressed);
 const BGM = new Audio(`./bgm/${Math.floor(Math.random() * 3) + 1}.mp3`);
 BGM.loop = true;
 
-const BallSound = new Audio(`./se/2.mp3`);
-const Fanfare = new Audio(`./se/fanfare.mp3`);
+const BallSound = new Audio(`./se/ball.mp3`);
+const FanfareSound = new Audio(`./se/fanfare.mp3`);
+const GameOver = new Audio(`./se/gameover.mp3`);
+
 const isSmartPhone = navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i);
 
 let volume = Number(localStorage.getItem("volume")) + 0;
@@ -25,9 +27,13 @@ function audioPressed() {
 
 function setImgSrc() {
     AudioImg.src = `./img/speaker/${volume}.png`;
-    BGM.volume = (volume / 3) * (volume / 3);
-    BallSound.volume = (volume / 3) * (volume / 3);
-    Fanfare.volume = (volume / 3) * (volume / 3);
+
+    const calculatedVolume = (volume / 3) * (volume / 3);
+    BGM.volume = calculatedVolume;
+    BallSound.volume = calculatedVolume;
+    FanfareSound.volume = calculatedVolume;
+    GameOver.volume = calculatedVolume;
+
     localStorage.setItem("volume", volume);
 }
 setImgSrc();
@@ -55,10 +61,18 @@ function playBallSound() {
     BallSound.play();
 }
 
-function playFanfare() {
+function playFanfareSound() {
     if (volume == 0) {
         return;
     }
 
-    Fanfare.play();
+    FanfareSound.play();
+}
+
+function playGameOverSound() {
+    if (volume == 0) {
+        return;
+    }
+
+    GameOver.play();
 }
