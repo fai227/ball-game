@@ -149,9 +149,6 @@ setDictionary();
 
 // #region バナー
 const AdTexts = shuffle([
-    "鋭意開発中！",
-    "11/19（日）に公開予定☺",
-
     "ランキングで1位を目指そう！",
     "ブックマークしてね",
     "どんどん友達にシェアしてね",
@@ -167,12 +164,12 @@ const DevelopTips = shuffle([
     "初めての物理演算、実装結構大変やったよ",
     "MatterJSというライブラリを使っています",
 
-    "ラグビーボール型の形を作るのがちょっと大変だったよ",
+    "アメフトボール型の形を作るのがちょっと大変だったよ",
     "パソコンで開くと、効果音がなるよ",
     "テニスボール以上を作ると、オートセーブされるよ。ページをリロードしても安心！",
     "BGMは3種類あるよ",
 
-    "構想から開発完成まで大体1ヶ月～",
+    "構想から開発完成まで大体1ヶ月ぐらいかかったよ",
     "他の作品も遊んでみてね～！詳しくはサイト一番下のボタンからホームに戻ってね！",
 ]);
 
@@ -180,10 +177,10 @@ const IllustTips = shuffle([
     "ビーだまは一番小さいけど、実は一番使っている色の数が多い！",
     "スーパーボールは「らしさ」を出すのに苦労…白いマーブルが良く映えるね",
     "ピンポンだまの目の星は高級さを表す指標のアレ。大会とかでは3つ星を使うらしい。",
-    "ピンポン玉、肥えろ跳ねるな",
+    "ピンポンだま、肥えろ跳ねるな",
     "ゴルフボールはおヒゲがチャーミング！デコボコの影も合わさって最強に見える",
-    "8ボールはデザインに超四苦八苦…。結果的には無機質なお顔が超GOOD！",
-    "テニスボールはボールゲームの顔であり一番最初に描かれたボール！じつは縁取りがほんの少しもこもこしております",
+    "ビリヤードだまはデザインに超四苦八苦…。結果的には無機質なお顔が超GOOD！",
+    "テニスボールはボールゲームの顔であり一番最初に描かれたボール！実は縁取りがほんの少しもこもこしてる！",
     "初期では、やきゅうボールは縫い目を傷に見立てた隻眼となってたぞ！グッドデザイン賞受賞！",
     "アメフトボールは縫い目が口に…！？何か頬張っているような表情がとても好きです",
     "バレーボールは模様と顔がどっちも映えるような色使い！顔は少女漫画のマスコット的なかわいさに！",
@@ -200,36 +197,36 @@ function showNextBanner() {
     // バナーの内容を変更
     const randNum = Math.random();
 
-    // 60%の確率で広告を表示
-    if (randNum < 0.6) {
+    // 70%の確率で広告を表示
+    if (randNum < 0.7) {
         adIndex = (adIndex + 1) % AdTexts.length;
         BannerContent.textContent = AdTexts[adIndex];
     }
-    // 20%の確率で開発秘話を表示
-    else if (randNum < 0.8) {
+    // 15%の確率で開発秘話を表示
+    else if (randNum < 0.85) {
         developIndex = (developIndex + 1) % DevelopTips.length;
         BannerContent.textContent = DevelopTips[developIndex];
     }
-    // 20%の確率でイラストの秘話を表示
+    // 15%の確率でイラストの秘話を表示
     else {
         illustIndex = (illustIndex + 1) % IllustTips.length;
         BannerContent.textContent = IllustTips[illustIndex];
     }
 
-
+    const BannerTime = BannerContent.textContent.length * 1000;
 
     // バナーを右から左に移動
     Banner.animate([
-        { transform: "translateX(100%)" },
-        { transform: "translateX(-100%)" },
+        { transform: `translateX(${Banner.parentElement.clientWidth}px)` },
+        { transform: `translateX(-${Banner.clientWidth}px)` },
     ], {
-        duration: 30 * 1000,
+        duration: BannerTime,
         easing: "linear",
         fill: "forwards",
     });
 
-    // アニメーション終了後に再度実行
-    setTimeout(showNextBanner, 30 * 1000);
+    // アニメーション終了後3秒後に次のバナーを表示
+    setTimeout(showNextBanner, BannerTime + 3000);
 }
 
 // 開始5秒後にバナー移動開始
