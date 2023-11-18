@@ -220,6 +220,10 @@ footer {
     width: 40%;
 }
 
+#evolutionDiv hr {
+    margin-bottom: 0.5rem;
+}
+
 #dialogWrapperDiv {
     position: fixed;
     top: 0;
