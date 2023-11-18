@@ -87,9 +87,18 @@ function setPlatform() {
         }
     });
     dangerLine.isSensor = true;
-    dangerLine.tag = "dangerLine";
     Body.setStatic(dangerLine, true);
     Composite.add(engine.world, dangerLine);
+
+    const transparentDangerLine = Bodies.rectangle(540, 1980 - 1321 - 100 / 2, 1080, 100, {
+        render: {
+            fillStyle: "#00000000",
+        }
+    });
+    transparentDangerLine.isSensor = true;
+    transparentDangerLine.tag = "dangerLine";
+    Body.setStatic(transparentDangerLine, true);
+    Composite.add(engine.world, transparentDangerLine);
 
     const leftPlatform = Bodies.rectangle(25 / 2, 1980 - 1321 / 2, 25, 1321, {
         render: {
