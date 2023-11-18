@@ -1,7 +1,6 @@
 const wrappingDiv = document.getElementById("wrappingDiv");
 const canvas = document.getElementById("canvas");
 
-wrappingDiv.addEventListener("click", (e) => e.preventDefault());
 window.addEventListener("resize", resetElementsSize);
 window.addEventListener("load", resetElementsSize);
 
