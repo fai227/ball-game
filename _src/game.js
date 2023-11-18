@@ -73,7 +73,7 @@ function setPlatform() {
     Body.setStatic(bottomPlatform, true);
     Composite.add(engine.world, bottomPlatform);
 
-    const bottomTransparentPlatform = Bodies.rectangle(540, 1980, 1080, 50, {
+    const bottomTransparentPlatform = Bodies.rectangle(540, 2180, 1080, 450, {
         render: {
             fillStyle: "#00000000",
         }
