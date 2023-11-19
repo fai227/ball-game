@@ -149,8 +149,8 @@ Events.on(render, "afterRender", () => {
     // 数値表示
     context.lineWidth = 6;
     context.font = Math.round(render.canvas.width * 0.06) + "px 'HeaderFont'";
-    context.fillText(HighestScore, 50 + 175 / 2, 50 + 175 / 2 + 25, 150);
-    context.strokeText(HighestScore, 50 + 175 / 2, 50 + 175 / 2 + 25, 150);
+    context.fillText(HighestScore, 50 + 175 / 2, 50 + 175 / 2 + 25, 130);
+    context.strokeText(HighestScore, 50 + 175 / 2, 50 + 175 / 2 + 25, 130);
 
     // 画像とラベル
     context.drawImage(bubbleImage, 210, 100, 250, 250);
