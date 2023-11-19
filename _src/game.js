@@ -27,6 +27,7 @@ let GameDataBall = 1;
 let GameDataNext = 1;
 const Placeholder = { x: 540, ball: undefined };
 const HighestScore = Number(localStorage.getItem("highestScore"));
+const LineY = 1980 - 1321 - 25 / 2;
 
 // 環境設定
 const engine = Engine.create();
@@ -300,22 +301,39 @@ render.canvas.addEventListener("mousemove", mousemove);
 
 function mousemove(e) {
     const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
+
     moveBall(x);
 }
 
 render.canvas.addEventListener("touchstart", touchstart);
 
 function touchstart(e) {
-    const x = (e.touches[0].clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
     e.preventDefault();
+
+    const x = (e.touches[0].clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
+    const y = (e.touches[0].clientY - render.canvas.getBoundingClientRect().top) * 1980 / render.canvas.clientHeight;
+
+    if (y < LineY) {
+        showSlot();
+        return;
+    }
+
     moveBall(x);
 }
 
 render.canvas.addEventListener("touchmove", touchmove);
 
 function touchmove(e) {
-    const x = (e.touches[0].clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
     e.preventDefault();
+
+    const x = (e.touches[0].clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
+    const y = (e.touches[0].clientY - render.canvas.getBoundingClientRect().top) * 1980 / render.canvas.clientHeight;
+
+    if (y < LineY) {
+        showSlot();
+        return;
+    }
+
     moveBall(x);
 }
 
@@ -329,15 +347,36 @@ render.canvas.addEventListener("mousedown", mousedown);
 
 function mousedown(e) {
     const x = (e.clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
+    const y = (e.clientY - render.canvas.getBoundingClientRect().top) * 1980 / render.canvas.clientHeight;
+
+    if (y < LineY) {
+        showSlot();
+        return;
+    }
+
     placeBall(x);
 }
 
 render.canvas.addEventListener("touchend", touchend);
 
 function touchend(e) {
-    const x = (e.changedTouches[0].clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
-    placeBall(x);
     e.preventDefault();
+
+    const x = (e.changedTouches[0].clientX - render.canvas.getBoundingClientRect().left) * 1080 / render.canvas.clientWidth;
+    const y = (e.changedTouches[0].clientY - render.canvas.getBoundingClientRect().top) * 1980 / render.canvas.clientHeight;
+
+    if (y < LineY) {
+        hideSlot();
+        return;
+    }
+
+    placeBall(x);
+}
+
+render.canvas.addEventListener("mouseup", mouseup);
+
+function mouseup(e) {
+    hideSlot();
 }
 
 function placeBall(x) {
@@ -377,12 +416,25 @@ function start() {
         next();
     }
 
+    // セーブ設定
     window.addEventListener("beforeunload", saveData);
     window.addEventListener("blur", saveData);
+
+    // 念のため削除
     setTimeout(() => {
         localStorage.removeItem("data");
     }, 1000);
+
+    // BGM再生
     startBgm();
+
+    // ゲーム説明
+    const overlayDiv = document.getElementById("overlayDiv");
+    overlayDiv.style.animation = "fadeIn 1s forwards";
+    setTimeout(() => {
+        overlayDiv.style.animation = "fadeOut 1s forwards";
+        setTimeout(() => { overlayDiv.style.display = "none"; }, 1000);
+    }, 4000);
 }
 
 // ゲーム終了関数
@@ -394,6 +446,7 @@ async function gameOver() {
     render.canvas.removeEventListener("touchmove", touchmove);
     render.canvas.removeEventListener("touchend", touchend);
     render.canvas.removeEventListener("mousedown", mousedown);
+    render.canvas.removeEventListener("mouseup", mouseup);
     window.removeEventListener("beforeunload", saveData);
     window.removeEventListener("blur", saveData);
 

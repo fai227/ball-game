@@ -6,10 +6,14 @@ slotWrapper.addEventListener("touchmove", (e) => {
 
 const slot = document.getElementById("slot");
 let previousBallId = 0;
+let slotMoving = false;
 
 function setSlot(ballId) {
     // ボールがない場合はリターン
     if (ballId >= 16) return;
+
+    // フラグをオン
+    slotMoving = true;
 
     // フェードイン
     slotWrapper.style.animation = "fadeIn 0.5s forwards";
@@ -30,10 +34,10 @@ function setSlot(ballId) {
 
             // 回転終了後から0.5秒後にフェードアウト
             setTimeout(() => {
-                slot.style.transform = `translate(-50%, -50%) rotate(${(ballId - 1) * 30}deg)`;
                 slotWrapper.style.animation = "fadeOut 0.5s forwards";
                 setTimeout(() => {
                     slotWrapper.style.display = "none";
+                    slotMoving = false;
                 }, 500);
             }, 1000);
         }
@@ -76,10 +80,10 @@ function setSlot(ballId) {
 
                 // 回転終了後から0.5秒後にフェードアウト
                 setTimeout(() => {
-                    slot.style.transform = `translate(-50%, -50%) rotate(${(ballId - 8) * 90}deg)`;
                     slotWrapper.style.animation = "fadeOut 0.5s forwards";
                     setTimeout(() => {
                         slotWrapper.style.display = "none";
+                        slotMoving = false;
                     }, 500);
                 }, 1500);
             }, 500);
@@ -97,16 +101,31 @@ function setSlot(ballId) {
 
             // 回転終了後から0.5秒後にフェードアウト
             setTimeout(() => {
-                slot.style.transform = `translate(-50%, -50%) rotate(${(ballId - 8) * 90}deg)`;
                 slotWrapper.style.animation = "fadeOut 0.5s forwards";
                 setTimeout(() => {
                     slotWrapper.style.display = "none";
+                    slotMoving = false;
                 }, 500);
             }, 1000);
         }
 
         previousBallId = ballId;
     }, 500);
+}
+
+function hideSlot() {
+    if (slotMoving) return;
+
+    slotWrapper.style.display = "none";
+    slotWrapper.style.opacity = "0";
+}
+
+function showSlot() {
+    if (slotMoving) return;
+
+    slotWrapper.style.animation = "fadeIn 0s forwards";
+    slotWrapper.style.display = "block";
+    slotWrapper.style.opacity = "1";
 }
 // #endregion
 
