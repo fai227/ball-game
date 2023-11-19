@@ -34,6 +34,7 @@ function setSlot(ballId) {
 
             // 回転終了後から0.5秒後にフェードアウト
             setTimeout(() => {
+                lot.style.transform = `translate(-50%, -50%) rotate(${(ballId - 1) * 30}deg)`;
                 slotWrapper.style.animation = "fadeOut 0.5s forwards";
                 setTimeout(() => {
                     slotWrapper.style.display = "none";
@@ -80,6 +81,7 @@ function setSlot(ballId) {
 
                 // 回転終了後から0.5秒後にフェードアウト
                 setTimeout(() => {
+                    slot.style.transform = `translate(-50%, -50%) rotate(${(ballId - 8) * 90}deg)`;
                     slotWrapper.style.animation = "fadeOut 0.5s forwards";
                     setTimeout(() => {
                         slotWrapper.style.display = "none";
@@ -101,6 +103,7 @@ function setSlot(ballId) {
 
             // 回転終了後から0.5秒後にフェードアウト
             setTimeout(() => {
+                slot.style.transform = `translate(-50%, -50%) rotate(${(ballId - 8) * 90}deg)`;
                 slotWrapper.style.animation = "fadeOut 0.5s forwards";
                 setTimeout(() => {
                     slotWrapper.style.display = "none";
