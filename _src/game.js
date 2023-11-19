@@ -26,6 +26,7 @@ let GameDataScore = 0;
 let GameDataBall = 1;
 let GameDataNext = 1;
 const Placeholder = { x: 540, ball: undefined };
+const HighestScore = Number(localStorage.getItem("highestScore"));
 
 // 環境設定
 const engine = Engine.create();
@@ -125,9 +126,7 @@ Events.on(render, "afterRender", () => {
     const context = render.context;
     context.fillStyle = "white";
     context.strokeStyle = "#7a5829";
-    context.lineWidth = 8;
     context.textAlign = "center";
-    render.context.font = Math.round(render.canvas.width * 0.08) + "px 'HeaderFont'";
 
     // 開いているクレーン表示
     if (Placeholder.ball == undefined) {
@@ -138,12 +137,30 @@ Events.on(render, "afterRender", () => {
         context.drawImage(CraneImage, Placeholder.x - CraneImage.width / 4, 510 - CraneImage.height / 2, CraneImage.width / 2, CraneImage.height / 2);
     }
 
-    // スコア表示
-    context.drawImage(bubbleImage, 100, 50, 300, 300);
-    context.fillText("スコア", 250, 80);
-    context.strokeText("スコア", 250, 80);
-    context.fillText(GameDataScore, 250, 230, 250);
-    context.strokeText(GameDataScore, 250, 230, 250);
+    // ハイスコア表示
+    // 画像とラベル
+    context.drawImage(bubbleImage, 50, 50, 175, 175);
+    context.lineWidth = 4;
+    context.font = Math.round(render.canvas.width * 0.04) + "px 'HeaderFont'";
+    context.fillText("ハイスコア", 50 + 175 / 2, 80);
+    context.strokeText("ハイスコア", 50 + 175 / 2, 80);
+
+    // 数値表示
+    context.lineWidth = 6;
+    context.font = Math.round(render.canvas.width * 0.06) + "px 'HeaderFont'";
+    context.fillText(HighestScore, 50 + 175 / 2, 50 + 175 / 2 + 25, 150);
+    context.strokeText(HighestScore, 50 + 175 / 2, 50 + 175 / 2 + 25, 150);
+
+    // 画像とラベル
+    context.drawImage(bubbleImage, 210, 100, 250, 250);
+    context.fillText("スコア", 210 + 250 / 2, 130);
+    context.strokeText("スコア", 210 + 250 / 2, 130);
+
+    // 数値表示
+    context.lineWidth = 8;
+    context.font = Math.round(render.canvas.width * 0.08) + "px 'HeaderFont'";
+    context.fillText(GameDataScore, 210 + 250 / 2, 100 + 250 / 2 + 30, 200);
+    context.strokeText(GameDataScore, 210 + 250 / 2, 100 + 250 / 2 + 30, 200);
 
     // ネクスト表示
     context.drawImage(bubbleImage, 680, 50, 300, 300);
@@ -434,6 +451,11 @@ async function gameOver() {
         if (username != undefined) {
             document.getElementById("usernameInput").value = username;
         }
+    }
+
+    // ハイスコアを保存
+    if (HighestScore < GameDataScore) {
+        localStorage.setItem("highestScore", GameDataScore);
     }
 
     // ダイアログ表示
