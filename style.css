@@ -195,7 +195,7 @@ footer {
 }
 
 #topOverlayDiv {
-    background-color: #00FF0033;
+    background-color: #FFFFFF33;
     display: flex;
 
     justify-content: center;
@@ -206,7 +206,7 @@ footer {
 }
 
 #bottomOverlayDiv {
-    background-color: #FF000033;
+    background-color: #ffa63133;
     display: flex;
 
     justify-content: center;
