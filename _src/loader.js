@@ -1,4 +1,5 @@
 const ScoreText = "score";
+const MaxBall = "max_ball";
 
 function saveData() {
     // 最大ボールがビリヤードだま以下の場合は保存しない
@@ -12,6 +13,7 @@ function saveData() {
         placeholder: Placeholder.ball,
         next: GameDataNext,
     };
+    SaveData[MaxBall] = GameDataBall;
     SaveData[ScoreText] = GameDataScore;
 
     Balls.forEach(ball => {
@@ -46,6 +48,7 @@ function loadData() {
     Placeholder.ball = LoadData.placeholder;
     GameDataNext = LoadData.next;
     GameDataScore = LoadData[ScoreText];
+    GameDataBall = LoadData[MaxBall];
     LoadData.balls.forEach(ball => {
         const BallObject = createBall(ball.x, ball.y, ball.tag);
         Body.setVelocity(BallObject, { x: ball.vx, y: ball.vy });
