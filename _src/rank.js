@@ -102,14 +102,19 @@ async function postRanking(name, score, ball) {
 }
 
 async function getRanking() {
-    const result = await fetch(getUrl());
-    const data = await result.json();
+    try {
+        const result = await fetch(getUrl());
+        const data = await result.json();
 
-    if (data["week"].length == 10) {
-        lowestScore = data["week"][data["week"].length - 1].score;
+        if (data["week"].length == 10) {
+            lowestScore = data["week"][data["week"].length - 1].score;
+        }
+
+        setRanking(data);
     }
-
-    setRanking(data);
+    catch (e) {
+        alert("ランキングの取得に失敗しました。このままプレイするとランキングに反映されない可能性がございます。何度かリロードして同じ症状が続く場合は、開発者にご報告ください。");
+    }
 }
 
 window.addEventListener("load", getRanking);
