@@ -507,6 +507,11 @@ footer {
 @keyframes roll {
     0% {
         transform: rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
     }
 
     90% {
