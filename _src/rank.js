@@ -14,6 +14,10 @@ function setRanking(rankingData) {
         rankingTable.removeChild(rankingTable.firstChild);
     }
 
+    // 念のためソート
+    rankingData["week"].sort((a, b) => b.score - a.score);
+    rankingData["total"].sort((a, b) => b.score - a.score);
+
     // ヘッダー作成
     const nameHeaderRow = document.createElement("tr");
     rankingTable.appendChild(nameHeaderRow);
@@ -83,7 +87,6 @@ async function postRanking(name, score, ball) {
             setRanking(data);
             break;
         } catch (e) {
-            console.log(e)
             let yes = confirm("ランキング反映中にエラーが発生しました．リトライしますか？\n（エラーが続く場合はご報告ください）");
             // リトライしない場合は終了
             if (!yes) {
