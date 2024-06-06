@@ -1,11 +1,14 @@
 const https = "https";
-const domainName = ["vvbasr6ub1", "execute-api", "ap-northeast-1", "amazonaws", "com"];
-const gameName = "ball-game";
-
+const dataCenter = "data-center";
+const azurewebsites = "azurewebsites";
+const net = "net";
+const ballGame = "ball-game";
+const ranking = "ranking";
+const rankingTable = document.getElementById("rankingTable");
 let lowestScore = 0;
 
 function getUrl() {
-    return https + "://" + domainName.join(".") + "/" + gameName;
+    return https + "://" + dataCenter + "." + azurewebsites + "." + net + "/" + ballGame + "/" + ranking;
 }
 
 function setRanking(rankingData) {
@@ -83,7 +86,6 @@ async function postRanking(name, score, ball) {
             setRanking(data);
             break;
         } catch (e) {
-            console.log(e)
             let yes = confirm("ランキング反映中にエラーが発生しました．リトライしますか？\n（エラーが続く場合はご報告ください）");
             // リトライしない場合は終了
             if (!yes) {
