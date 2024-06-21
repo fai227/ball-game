@@ -14,10 +14,6 @@ function setRanking(rankingData) {
         rankingTable.removeChild(rankingTable.firstChild);
     }
 
-    // 念のためソート
-    rankingData["week"].sort((a, b) => b.score - a.score);
-    rankingData["total"].sort((a, b) => b.score - a.score);
-
     // ヘッダー作成
     const nameHeaderRow = document.createElement("tr");
     rankingTable.appendChild(nameHeaderRow);
@@ -84,6 +80,11 @@ async function postRanking(name, score, ball) {
 
             // 成功したので反映して終了
             const data = await result.json();
+
+            // ソート
+            data["week"].sort((a, b) => b.score - a.score);
+            data["total"].sort((a, b) => b.score - a.score);
+
             setRanking(data);
             break;
         } catch (e) {
@@ -106,6 +107,10 @@ async function getRanking() {
     try {
         const result = await fetch(getUrl());
         const data = await result.json();
+
+        // ソート
+        data["week"].sort((a, b) => b.score - a.score);
+        data["total"].sort((a, b) => b.score - a.score);
 
         if (data["week"].length == 10) {
             lowestScore = data["week"][data["week"].length - 1].score;
