@@ -2,11 +2,6 @@ const ScoreText = "score";
 const MaxBall = "max_ball";
 
 function saveData() {
-    // 最大ボールがビリヤードだま以下の場合は保存しない
-    if (GameDataBall <= 5) {
-        return;
-    }
-
     const Balls = engine.world.bodies.filter((e) => { return e.tag && e.tag > 0 });  // ボールでフィルター
     const SaveData = {
         balls: [],
@@ -33,16 +28,14 @@ function saveData() {
 function loadData() {
     // データがあるかチェック
     if (localStorage.getItem("data") == undefined) {
-        return;
+        return false;
     }
 
     // データをロード
     const LoadData = JSON.parse(localStorage.getItem("data"));
 
-    // データをロードするかチェック
-    if (!confirm("前回のデータをロードしますか？")) {
-        return;
-    }
+    // データをクリア
+    localStorage.removeItem("data");
 
     // ロードを反映
     Placeholder.ball = LoadData.placeholder;
@@ -54,4 +47,6 @@ function loadData() {
         Body.setVelocity(BallObject, { x: ball.vx, y: ball.vy });
         Body.setAngle(BallObject, ball.angle);
     });
+
+    return true;
 }

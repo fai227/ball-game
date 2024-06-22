@@ -11,10 +11,19 @@ const Events = Matter.Events;
 
 const StartGameButton = document.getElementById("startGameButton");
 StartGameButton.onclick = startGameButtonPressed;
+const LoadGameButton = document.getElementById("loadGameButton");
+LoadGameButton.onclick = loadGameButtonPressed;
 const RankingButton = document.getElementById("rankingButton");
 RankingButton.onclick = rankingButtonPressed;
 const HowToPlayButton = document.getElementById("howToPlayButton");
 HowToPlayButton.onclick = howToPlayButtonPressed;
+const saveDataButton = document.getElementById("saveDataButton");
+saveDataButton.onclick = saveAndFinish;
+
+// ボタン設定
+if (localStorage.getItem("data") != undefined) {
+    LoadGameButton.disabled = false;
+}
 
 // 定数設定
 const bubbleImage = new Image(); bubbleImage.src = "./img/bubble.png";
@@ -416,15 +425,6 @@ function start() {
         next();
     }
 
-    // セーブ設定
-    window.addEventListener("beforeunload", saveData);
-    window.addEventListener("blur", saveData);
-
-    // 念のため削除
-    setTimeout(() => {
-        localStorage.removeItem("data");
-    }, 1000);
-
     // BGM再生
     startBgm();
 
@@ -447,8 +447,7 @@ async function gameOver() {
     render.canvas.removeEventListener("touchend", touchend);
     render.canvas.removeEventListener("mousedown", mousedown);
     render.canvas.removeEventListener("mouseup", mouseup);
-    window.removeEventListener("beforeunload", saveData);
-    window.removeEventListener("blur", saveData);
+    saveDataButton.disabled = true;
 
     // コールバックをすべて消す
     Events.off(engine, "collisionStart");
@@ -517,9 +516,6 @@ async function gameOver() {
     dialog.style.opacity = 0;
     dialog.style.display = "flex";
     dialog.style.animation = "fadeIn 1s forwards";
-
-    // 念のため削除
-    localStorage.removeItem("data");
 }
 
 // 次に進める関数
@@ -657,6 +653,12 @@ function startGameButtonPressed() {
     }, 1000);
 }
 
+function loadGameButtonPressed() {
+    if (loadData()) {
+        startGameButtonPressed();
+    }
+}
+
 function rankingButtonPressed() {
     document.getElementById("rankingDiv").scrollIntoView({
         behavior: "smooth",
@@ -671,4 +673,9 @@ function howToPlayButtonPressed() {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function saveAndFinish() {
+    saveData();
+    location.reload();
 }
