@@ -417,13 +417,13 @@ function setPlaceholder(x) {
 
 // スタート関数
 function start() {
-    // ゲームデータをロード
-    loadData();
-
     // プレースホルダーがないときはネクスト生成
     if (Placeholder.ball == undefined) {
         next();
     }
+
+    // 念のためデータを削除
+    localStorage.removeItem("data");
 
     // BGM再生
     startBgm();

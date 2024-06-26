@@ -22,7 +22,7 @@ function saveData() {
         });
     });
 
-    localStorage.setItem("data", JSON.stringify(SaveData));
+    localStorage.setItem("data", btoa(JSON.stringify(SaveData)));
 }
 
 function loadData() {
@@ -32,7 +32,8 @@ function loadData() {
     }
 
     // データをロード
-    const LoadData = JSON.parse(localStorage.getItem("data"));
+    const LoadData = JSON.parse(atob(localStorage.getItem("data")));
+
 
     // データをクリア
     localStorage.removeItem("data");
