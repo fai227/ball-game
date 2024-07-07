@@ -1,7 +1,7 @@
 const AudioImg = document.getElementById("audioImg");
 AudioImg.addEventListener("click", audioPressed);
 
-const BGM = new Audio(`./bgm/${Math.floor(Math.random() * 3) + 1}.mp3`);
+const BGM = new Audio(`./bgm/${Math.floor(Math.random() * 5) + 1}.mp3`);
 BGM.loop = true;
 
 const BallSound = new Audio(`./se/ball.mp3`);
