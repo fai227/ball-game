@@ -137,7 +137,7 @@ document.getElementById("previousDictionary").addEventListener("click", setPrevi
 document.getElementById("nextDictionary").addEventListener("click", setNextDictionary);
 
 // ボール辞典
-const BallName = ["ビーだま", "スーパーボール", "ピンポンだま", "ゴルフボール", "ビリヤードだま", "テニスボール", "やきゅうボール", "アメフトボール", "バレーボール", "サッカーボール", "バスケットボール", "???"];
+const BallName = ["ビーだま", "スーパーボール", "ピンポンだま", "ゴルフボール", "ビリヤードだま", "テニスボール", "やきゅうボール", "アメフトボール", "バレーボール", "サッカーボール", "ビーチボール", "???"];
 let dictionaryIndex = 1;
 function setNextDictionary() {
     dictionaryIndex++;
@@ -178,8 +178,8 @@ const AdTexts = shuffle([
 
     "スーパーボールとピンポンだまは結構跳ねるよ",
     "ビリヤードだまは割と重いよ",
-    "まずはバスケットボールを作ろう！",
-    "慣れてきたら、バスケットボールを２こ作れるかな...？",
+    "まずはビーチボールを作ろう！",
+    "慣れてきたら、ビーチボールを２こ作れるかな...？",
 ]);
 
 const DevelopTips = shuffle([
@@ -193,7 +193,6 @@ const DevelopTips = shuffle([
 
     "構想から開発完成まで大体1ヶ月ぐらいかかったよ",
     "他の作品も遊んでみてね～！詳しくはサイト一番下のボタンからホームに戻ってね！",
-    "バグ報告は、ページ下部のリンクから～"
 ]);
 
 const IllustTips = shuffle([
@@ -208,7 +207,7 @@ const IllustTips = shuffle([
     "アメフトボールは縫い目が口に…！？何か頬張っているような表情がとても好きです",
     "バレーボールは模様と顔がどっちも映えるような色使い！顔は少女漫画のマスコット的なかわいさに！",
     "サッカーボール、実は真っ黒じゃなくて少し青色がかった色を使っているぞ！",
-    "バスケットボールは「モッ」とした口がミソ。ゲーム中に見る機会が少ないのがかなしいね",
+    "ビーチボールは「モッ」とした口がミソ。ゲーム中に見る機会が少ないのがかなしいね",
 ]);
 
 const Banner = document.getElementById("banner");
