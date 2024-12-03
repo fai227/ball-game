@@ -16,7 +16,7 @@ html {
 }
 
 body {
-    background-color: #C68E53;
+    background-color: #A94F36;
 
     text-align: center;
     font-family: "TextFont";
@@ -473,4 +473,66 @@ footer {
     margin: 0.5rem auto 2rem auto;
     width: 60%;
     padding: 1rem;
+}
+
+.snow {
+    /*雪の色*/
+    color: snow;
+    /*雪の大きさ*/
+    font-size: 10px;
+    /*初期位置*/
+    position: fixed;
+    top: -5%;
+    /*雪を適当な幅で降らせる*/
+    text-shadow:
+        10vw -400px 3px,
+        30vw -580px 1px,
+        42vw -340px 5px,
+        63vw -180px 0,
+        86vw -320px 9px;
+    /*雪アニメーション1*/
+    animation: roll 5s linear infinite;
+}
+
+/*2つめの雪アニメーション*/
+.snow2nd {
+    left: 5vw;
+    text-shadow:
+        5vw -100px 2px,
+        20vw -500px 4px,
+        39vw -250px 2px,
+        56vw -150px 2px,
+        78vw -220px 4px,
+        94vw -170px 7px;
+    ;
+    animation: anim 8s linear infinite;
+    animation-delay: 2.5s;
+}
+
+@keyframes roll {
+    0% {
+        transform: rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: rotate(20deg);
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes anim {
+    100% {
+        color: transparent;
+        top: 150%;
+    }
 }
