@@ -137,7 +137,24 @@ document.getElementById("previousDictionary").addEventListener("click", setPrevi
 document.getElementById("nextDictionary").addEventListener("click", setNextDictionary);
 
 // ボール辞典
-const BallName = ["ビーだま", "スーパーボール", "ピンポンだま", "ゴルフボール", "ビリヤードだま", "テニスボール", "やきゅうボール", "アメフトボール", "バレーボール", "サッカーボール", "バスケットボール", "???"];
+const BallName = [
+    "ビーだま",
+    "スーパーボール",
+    "ピンポンだま",
+    "ゴルフボール",
+    "ビリヤードだま",
+    "テニスボール",
+    "やきゅうボール",
+    "アメフトボール",
+    "バレーボール",
+    "サッカーボール",
+    "バスケットボール",
+
+    "スーパーボール",
+    "ビリヤードだま",
+    "アメフトボール",
+    "バスケットボール",
+];
 let dictionaryIndex = 1;
 function setNextDictionary() {
     dictionaryIndex++;
@@ -154,17 +171,10 @@ function setPreviousDictionary() {
     setDictionary();
 }
 function setDictionary() {
-    // ハテナ表示
-    if (dictionaryIndex == BallName.length) {
-        document.getElementById("dictionaryId").textContent = `No. ??`;
-        document.getElementById("dictionaryImg").src = `./img/balls/hatena.png`;
-        document.getElementById("dictionaryH2").textContent = BallName[dictionaryIndex - 1];
-    }
-    else {
-        document.getElementById("dictionaryId").textContent = `No. ${dictionaryIndex}`;
-        document.getElementById("dictionaryImg").src = `./img/balls/${dictionaryIndex}.png`;
-        document.getElementById("dictionaryH2").textContent = BallName[dictionaryIndex - 1];
-    }
+    document.getElementById("dictionaryId").textContent = dictionaryIndex <= 11 ? `No. ${dictionaryIndex}` : `No. ${dictionaryIndex - 11} (おに)`;
+    document.getElementById("dictionaryImg").src = `./img/balls/${dictionaryIndex}.png`;
+    document.getElementById("dictionaryH2").textContent = BallName[dictionaryIndex - 1];
+
 }
 setDictionary();
 // #endregion
@@ -219,17 +229,17 @@ function showNextBanner() {
     // バナーの内容を変更
     const randNum = Math.random();
 
-    // 70%の確率で広告を表示
-    if (randNum < 0.7) {
+    // 50%の確率で広告を表示
+    if (randNum < 0.5) {
         adIndex = (adIndex + 1) % AdTexts.length;
         BannerContent.textContent = AdTexts[adIndex];
     }
-    // 15%の確率で開発秘話を表示
-    else if (randNum < 0.85) {
+    // 25%の確率で開発秘話を表示
+    else if (randNum < 0.75) {
         developIndex = (developIndex + 1) % DevelopTips.length;
         BannerContent.textContent = DevelopTips[developIndex];
     }
-    // 15%の確率でイラストの秘話を表示
+    // 25%の確率でイラストの秘話を表示
     else {
         illustIndex = (illustIndex + 1) % IllustTips.length;
         BannerContent.textContent = IllustTips[illustIndex];
